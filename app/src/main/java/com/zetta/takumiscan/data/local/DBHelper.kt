@@ -13,7 +13,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
 
     override fun onCreate(db: SQLiteDatabase?) {
         val query = "create table $TABLE_DATA_USER (" +
-                "ID integer primary key autoincrement," +
+                "NISN integer primary key," +
                 "Nama text not null," +
                 "Kelas text not null," +
                 "Email text not null," +
