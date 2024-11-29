@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.databinding.ActivityMainBinding
+import com.zetta.takumiscan.fragment.HistoryFragment
 import com.zetta.takumiscan.fragment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home -> setFragment(HomeFragment())
-
+                R.id.history -> setFragment(HistoryFragment())
             }
             true
         }
