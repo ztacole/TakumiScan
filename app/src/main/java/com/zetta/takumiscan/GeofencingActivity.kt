@@ -17,7 +17,6 @@ import com.zetta.takumiscan.util.Utils.GEOFENCE_LONGITUDE
 import com.zetta.takumiscan.util.Utils.GEOFENCE_RADIUS
 
 class GeofencingActivity : AppCompatActivity() {
-
     private lateinit var geofencingClient: GeofencingClient
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
