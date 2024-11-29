@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
             return
         }
-        val intent = Intent(this, GeofencingActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
