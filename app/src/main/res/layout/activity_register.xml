@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.RegisterActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="120dp"
@@ -26,7 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/takumi_logo" />
+            app:srcCompat="@drawable/baseline_account_circle_24"
+            app:tint="@color/navy" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
@@ -41,10 +43,10 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
             <EditText
-                android:id="@+id/tbEmail"
+                android:id="@+id/tbNISN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_person_24"
+                android:drawableStart="@drawable/baseline_credit_card_24"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/navy"
                 android:ems="10"
@@ -59,85 +61,105 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Password"
+            android:hint="Nama"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
             <EditText
-                android:id="@+id/tbPass"
+                android:id="@+id/tbNama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_lock_24"
+                android:drawableStart="@drawable/baseline_person_24"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/navy"
                 android:ems="10"
-                android:inputType="textPassword" />
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Kelas"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+            <EditText
+                android:id="@+id/tbKelas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/baseline_class_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/navy"
+                android:ems="10"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout4"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Jurusan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+            <EditText
+                android:id="@+id/tbJurusan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/baseline_school_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/navy"
+                android:ems="10"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Login"
+            android:text="Register"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout"
             app:srcCompat="@drawable/baseline_remove_red_eye_24"
             app:tint="@color/navy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="Don't have an account?"
-        android:textColor="@color/navy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toSignIn"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.264" />
-
-    <TextView
-        android:id="@+id/toSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="Register now"
-        android:textColor="#1230AE"
-        app:layout_constraintBottom_toBottomOf="@+id/account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/account"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="131dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-
-        android:text="Login"
-        android:textColor="@color/navy"
-        android:textSize="46dp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/Takumii"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.551"
+        app:srcCompat="@drawable/takumiii" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
