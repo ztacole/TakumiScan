@@ -1,4 +1,4 @@
-package com.zetta.takumiscan
+package com.zetta.takumiscan.activity
 
 import android.Manifest
 import android.content.Intent
@@ -11,13 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.LocationServices
-import com.zetta.takumiscan.activity.MainActivity
+import com.zetta.takumiscan.R
 import com.zetta.takumiscan.util.Utils.GEOFENCE_LATITUDE
 import com.zetta.takumiscan.util.Utils.GEOFENCE_LONGITUDE
 import com.zetta.takumiscan.util.Utils.GEOFENCE_RADIUS
 
 class GeofencingActivity : AppCompatActivity() {
-
     private lateinit var geofencingClient: GeofencingClient
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()

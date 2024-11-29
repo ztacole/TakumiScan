@@ -31,11 +31,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
             android:hint="Username"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
@@ -43,10 +44,10 @@
                 android:id="@+id/tbEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/baseline_person_24"
+                android:drawablePadding="8dp"
                 android:drawableTint="@color/navy"
+                android:ems="10"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -54,11 +55,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout2"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:hint="Password"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
@@ -67,11 +69,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
                 android:drawableStart="@drawable/baseline_lock_24"
-                android:drawableEnd="@drawable/baseline_remove_red_eye_24"
-                android:drawableTint="@color/navy"
                 android:drawablePadding="8dp"
+                android:drawableTint="@color/navy"
+                android:ems="10"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -86,6 +87,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout2"
+            app:tint="@color/navy"
+            app:srcCompat="@drawable/baseline_remove_red_eye_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -96,5 +107,26 @@
         android:textColor="@color/navy"
         tools:layout_editor_absoluteX="91dp"
         tools:layout_editor_absoluteY="591dp" />
+
+    <TextView
+        android:id="@+id/toSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register now"
+        android:textColor="#1230AE"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="591dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="131dp"
+        android:layout_height="68dp"
+        android:text="Login"
+
+        android:textColor="@color/navy"
+        android:textSize="46dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="62dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
