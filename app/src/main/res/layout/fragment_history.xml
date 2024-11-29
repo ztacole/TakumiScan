@@ -13,7 +13,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bookrecyclerView"
+        android:id="@+id/rvhistory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="200dp"
@@ -23,24 +23,29 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:cardBackgroundColor="@color/navy" >
+        android:layout_height="100dp"
+        app:cardBackgroundColor="@color/navy"
+        android:background="@drawable/gradient">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/lblhistory"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins_extrabold"
             android:text="History"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            />
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="49dp"
-        android:background="@drawable/gradient" >
+        android:layout_height="150dp"
+        android:layout_marginTop="99dp"
+        android:background="@drawable/gradient"
+        android:translationZ="-100dp">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
