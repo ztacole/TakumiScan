@@ -1,4 +1,4 @@
-package com.zetta.takumiscan
+package com.zetta.takumiscan.util.geofence
 
 import android.app.PendingIntent
 import android.content.Context

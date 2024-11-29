@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.zetta.takumiscan.GeofencingActivity
 import com.zetta.takumiscan.R
 
 class SplashScreenActivity : AppCompatActivity() {
