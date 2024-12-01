@@ -12,9 +12,9 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.LocationServices
 import com.zetta.takumiscan.R
-import com.zetta.takumiscan.util.Utils.GEOFENCE_LATITUDE
-import com.zetta.takumiscan.util.Utils.GEOFENCE_LONGITUDE
-import com.zetta.takumiscan.util.Utils.GEOFENCE_RADIUS
+import com.zetta.takumiscan.util.Constants.GEOFENCE_LATITUDE
+import com.zetta.takumiscan.util.Constants.GEOFENCE_LONGITUDE
+import com.zetta.takumiscan.util.Constants.GEOFENCE_RADIUS
 
 class GeofencingActivity : AppCompatActivity() {
     private lateinit var geofencingClient: GeofencingClient
