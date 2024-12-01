@@ -4,50 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="8dp"
+    android:layout_marginBottom="8dp"
     tools:context=".history_item">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#8FABD6">
+        android:padding="8dp"
+        android:background="@drawable/card_gradient"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imghistory"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:id="@+id/imgHistory"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/lblstatushistory"
+            android:id="@+id/lblStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Status"
-            android:textColor="@color/navy"
-            android:textSize="20sp"
+            android:text="Tepat Waktu"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imghistory"
+            app:layout_constraintStart_toEndOf="@+id/imgHistory"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lblwaktu"
+            android:id="@+id/lblDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="waktu dan tanggal"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:text="17-09-2024 06:17:21"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

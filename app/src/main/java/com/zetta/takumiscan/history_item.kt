@@ -34,7 +34,7 @@ class history_item : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_item, container, false)
+        return inflater.inflate(R.layout.item_history, container, false)
     }
 
     companion object {
