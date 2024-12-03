@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,159 +7,176 @@
     android:layout_height="match_parent"
     tools:context=".activity.RegisterActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="16dp">
 
-
+        <!-- Background Top Banner -->
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/bgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bgsklh"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/takumiputih"
+            app:layout_constraintTop_toTopOf="@id/bgBanner"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+
+        <!-- Profile Image -->
+        <ImageView
+            android:id="@+id/profileImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="-60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_account_circle_24"
+            app:layout_constraintTop_toBottomOf="@+id/bgBanner"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_account_circle_24"
-            app:tint="@color/navy" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Camera Icon -->
+        <ImageView
+            android:id="@+id/cameraIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="-1dp"
+            android:src="@drawable/baseline_camera_alt_24"
+            android:padding="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
+            app:layout_constraintEnd_toEndOf="@+id/profileImage" />
+
+        <!-- NISN Input -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/inputNISN"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
             android:hint="NISN"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_margin="16dp">
 
             <EditText
                 android:id="@+id/tbNISN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/baseline_credit_card_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/navy"
-                android:ems="10"
-                android:inputType="text" />
-
+                android:drawablePadding="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Nama Input -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/inputNama"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:hint="Nama"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/inputNISN"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <EditText
                 android:id="@+id/tbNama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawableStart="@drawable/baseline_person_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/navy"
-                android:ems="10"
-                android:inputType="text" />
-
+                android:drawablePadding="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Kelas Input -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/inputKelas"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:hint="Kelas"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/inputNama"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <EditText
                 android:id="@+id/tbKelas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawableStart="@drawable/baseline_class_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/navy"
-                android:ems="10"
-                android:inputType="text" />
-
+                android:drawablePadding="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Jurusan Input -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/inputJurusan"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:hint="Jurusan"
+            app:layout_constraintTop_toBottomOf="@+id/inputKelas"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <EditText
                 android:id="@+id/tbJurusan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawableStart="@drawable/baseline_school_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/navy"
-                android:ems="10"
-                android:inputType="text" />
-
+                android:drawablePadding="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnRegister"
+        <!-- Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Register"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:hint="Password"
+            app:layout_constraintTop_toBottomOf="@+id/inputJurusan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <EditText
+                android:id="@+id/tbPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Eye Icon for Password -->
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+            android:id="@+id/eyeIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/baseline_remove_red_eye_24"
+            app:layout_constraintTop_toTopOf="@id/inputPassword"
+            app:layout_constraintBottom_toBottomOf="@id/inputPassword"
+            app:layout_constraintEnd_toEndOf="@+id/inputPassword" />
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout"
-            app:srcCompat="@drawable/baseline_remove_red_eye_24"
-            app:tint="@color/navy" />
-
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_gradient"
+            android:text="Register"
+            app:layout_constraintTop_toBottomOf="@+id/inputPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/Takumii"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.551"
-        app:srcCompat="@drawable/takumiii" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
