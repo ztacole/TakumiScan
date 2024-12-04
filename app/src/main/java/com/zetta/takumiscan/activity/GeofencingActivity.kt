@@ -45,7 +45,6 @@ class GeofencingActivity : AppCompatActivity() {
 
     private fun checkLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
-//            Toast.makeText(this, "Lokasi Diperlukan", Toast.LENGTH_SHORT).show()
             return
         }
 

@@ -20,10 +20,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginProcess(){
-        if (binding.tbEmail.text.isEmpty() || binding.tbPass.text.isEmpty()){
-            Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
-            return
-        }
+//        if (binding.tbEmail.text.isEmpty() || binding.tbPass.text.isEmpty()){
+//            Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
+//            return
+//        }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()

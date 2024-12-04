@@ -3,20 +3,16 @@ package com.zetta.takumiscan.util.geofence
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
+import com.zetta.takumiscan.model.GeofenceData
 
-class GeofenceHelper {
+object GeofenceHelper {
     // Data kelas untuk menyimpan informasi geofence
-    data class GeofenceData(
-        val id: String,
-        val latitude: Double,
-        val longitude: Double,
-        val radius: Float,
-        val transitionTypes: Int
-    )
+
 
     // Membuat geofence
     private fun createGeofence(data: GeofenceData): Geofence {
@@ -40,17 +36,15 @@ class GeofenceHelper {
         }.build()
     }
 
-    companion object {
-        // Membuat pending intent untuk broadcast receiver
-        fun getGeofencePendingIntent(context: Context): PendingIntent {
-            val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
-            return PendingIntent.getBroadcast(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-        }
+    // Membuat pending intent untuk broadcast receiver
+    fun getGeofencePendingIntent(context: Context): PendingIntent {
+        val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
+        return PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
     }
 
     // Menambahkan geofence
@@ -74,13 +68,22 @@ class GeofenceHelper {
         }
 
         // Tambahkan geofence
-        geofencingClient.addGeofences(
-            getGeofencingRequest(geofences),
-            getGeofencePendingIntent(context)
-        ).addOnSuccessListener {
-            callback(true)
-        }.addOnFailureListener {
-            callback(false)
+        try{
+            geofencingClient.addGeofences(
+                getGeofencingRequest(geofences),
+                getGeofencePendingIntent(context)
+            ).addOnCompleteListener{
+                if (it.isSuccessful){
+                    Log.d("Geo", "add: success")
+                }
+                else{
+                    Log.e("Geo", "add: ${it.exception?.message}")
+                }
+            }
+            Log.d("FailedGeofence", "addGeofences: Success add", )
+        }
+        catch (e:SecurityException){
+            Log.e("FailedGeofence", "addGeofences: ${e.message}", )
         }
     }
 }

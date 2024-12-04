@@ -78,6 +78,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            style="@style/btnGradient"
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -98,32 +99,6 @@
             app:tint="@color/navy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="Don't have an account?"
-        android:textColor="@color/navy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toSignIn"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.264" />
-
-    <TextView
-        android:id="@+id/toSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="Register now"
-        android:textColor="#1230AE"
-        app:layout_constraintBottom_toBottomOf="@+id/account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/account"
-        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView"
