@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.service.autofill.UserData
 import com.zetta.takumiscan.model.DataUser
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
@@ -17,7 +16,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         private const val COLUMN_NAMA = "nama"
         private const val COLUMN_KELAS = "kelas"
         private const val COLUMN_JURUSAN = "jurusan"
-        private const val COLUMN_NO_HP = "noHP"
+        private const val COLUMN_PASWORD = "password"
 
         private const val TABLE_HISTORY = "History"
         private const val COLUMN_ID = "ID"
@@ -34,7 +33,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "$COLUMN_KELAS text not null," +
                 "$COLUMN_JURUSAN text not null," +
                 "$COLUMN_PHOTO blob not null," +
-                "$COLUMN_NO_HP text not null)"
+                "$COLUMN_PASWORD text not null)"
         val queryHistory = "create table $TABLE_HISTORY (" +
                 "$COLUMN_ID integer primary key," +
                 "$COLUMN_STATUS text not null," +
@@ -61,7 +60,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
             put(COLUMN_KELAS, data.kelas)
             put(COLUMN_JURUSAN, data.jurusan)
             put(COLUMN_PHOTO, data.photo)
-            put(COLUMN_NO_HP, data.noHP)
+            put(COLUMN_PASWORD, data.password)
         }
         db.insert(TABLE_DATA_USER, null, values)
         db.close()

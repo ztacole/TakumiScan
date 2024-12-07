@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        window.statusBarColor = resources.getColor(R.color.navy, theme)
+        window.statusBarColor = getColor(R.color.navy)
 
         binding.pager.isUserInputEnabled = false
 

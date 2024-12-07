@@ -6,5 +6,5 @@ data class DataUser(
     val kelas: String,
     val jurusan: String,
     val photo: ByteArray,
-    val noHP: String
+    val password: String
 )
