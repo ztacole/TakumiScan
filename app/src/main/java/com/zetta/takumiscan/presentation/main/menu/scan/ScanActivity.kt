@@ -20,7 +20,6 @@ import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.zetta.takumiscan.activity.WebViewActivity
 import com.zetta.takumiscan.databinding.ActivityScanBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -108,9 +107,9 @@ class ScanActivity : AppCompatActivity() {
         if (url != null){
             binding.lblResult.text=url
             binding.lblResult.setOnClickListener{
-                val intent = Intent(this, WebViewActivity::class.java)
-                intent.putExtra("url",url)
-                startActivity(intent)
+//                val intent = Intent(this, WebViewActivity::class.java)
+//                intent.putExtra("url",url)
+//                startActivity(intent)
             }
         }else{
             binding.lblResult.text = "No QR code detected"
