@@ -1,17 +1,16 @@
-package com.zetta.takumiscan.activity
+package com.zetta.takumiscan.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.zetta.takumiscan.R
+import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.databinding.ActivityMainBinding
-import com.zetta.takumiscan.fragment.HistoryFragment
-import com.zetta.takumiscan.fragment.HomeFragment
+import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
+import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

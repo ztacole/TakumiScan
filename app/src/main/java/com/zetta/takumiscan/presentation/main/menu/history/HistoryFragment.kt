@@ -1,13 +1,10 @@
-package com.zetta.takumiscan.fragment
+package com.zetta.takumiscan.presentation.main.menu.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.zetta.takumiscan.R
-import com.zetta.takumiscan.activity.MainActivity
 import com.zetta.takumiscan.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {

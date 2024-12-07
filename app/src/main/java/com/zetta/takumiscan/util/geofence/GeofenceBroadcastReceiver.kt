@@ -3,13 +3,10 @@ package com.zetta.takumiscan.util.geofence
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
-import com.zetta.takumiscan.activity.MainActivity
-import com.zetta.takumiscan.fragment.HomeFragment
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

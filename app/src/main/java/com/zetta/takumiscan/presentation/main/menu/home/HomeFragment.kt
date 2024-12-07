@@ -1,9 +1,7 @@
-package com.zetta.takumiscan.fragment
+package com.zetta.takumiscan.presentation.main.menu.home
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,10 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.enableSavedStateHandles
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -25,8 +21,6 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.zetta.takumiscan.R
-import com.zetta.takumiscan.activity.MainActivity
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID

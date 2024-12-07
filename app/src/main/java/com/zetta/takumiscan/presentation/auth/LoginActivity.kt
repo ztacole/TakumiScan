@@ -1,9 +1,9 @@
-package com.zetta.takumiscan.activity
+package com.zetta.takumiscan.presentation.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

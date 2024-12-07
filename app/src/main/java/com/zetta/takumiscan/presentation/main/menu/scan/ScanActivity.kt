@@ -1,10 +1,9 @@
-package com.zetta.takumiscan.activity
+package com.zetta.takumiscan.presentation.main.menu.scan
 
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Size
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -17,14 +16,11 @@ import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.zetta.takumiscan.R
-import com.zetta.takumiscan.databinding.ActivityMainBinding
+import com.zetta.takumiscan.activity.WebViewActivity
 import com.zetta.takumiscan.databinding.ActivityScanBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

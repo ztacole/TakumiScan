@@ -1,4 +1,4 @@
-package com.zetta.takumiscan.activity
+package com.zetta.takumiscan.presentation.splash
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.zetta.takumiscan.R
+import com.zetta.takumiscan.presentation.auth.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
