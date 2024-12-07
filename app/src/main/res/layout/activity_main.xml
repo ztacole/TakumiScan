@@ -94,7 +94,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
 
         android:background="@color/dark_gray"
         app:elevation="16dp"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:translationZ="100dp"
         app:cardCornerRadius="40dp"
         app:cardElevation="16dp"
@@ -120,13 +120,13 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:background="@drawable/gradient"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient">
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/baseline_qr_code_scanner_24"
                 app:tint="@color/white" />

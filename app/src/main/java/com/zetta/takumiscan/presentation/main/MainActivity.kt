@@ -13,7 +13,7 @@ import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
 import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val listFragment = listOf(
         HomeFragment(),
         HistoryFragment()

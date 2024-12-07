@@ -11,10 +11,6 @@ import com.google.android.gms.location.GeofencingRequest
 import com.zetta.takumiscan.model.GeofenceData
 
 object GeofenceHelper {
-    // Data kelas untuk menyimpan informasi geofence
-
-
-    // Membuat geofence
     private fun createGeofence(data: GeofenceData): Geofence {
         return Geofence.Builder()
             .setRequestId(data.id)
@@ -28,7 +24,6 @@ object GeofenceHelper {
             .build()
     }
 
-    // Membuat request geofencing
     private fun getGeofencingRequest(geofences: List<Geofence>): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
             setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
@@ -36,7 +31,6 @@ object GeofenceHelper {
         }.build()
     }
 
-    // Membuat pending intent untuk broadcast receiver
     fun getGeofencePendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
         return PendingIntent.getBroadcast(
@@ -47,17 +41,14 @@ object GeofenceHelper {
         )
     }
 
-    // Menambahkan geofence
     fun addGeofences(
         context: Context,
         geofencingClient: GeofencingClient,
         geofenceDataList: List<GeofenceData>,
         callback: (Boolean) -> Unit
     ) {
-        // Buat daftar geofence dari data
         val geofences = geofenceDataList.map { createGeofence(it) }
 
-        // Cek izin
         if (ActivityCompat.checkSelfPermission(
                 context,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -67,20 +58,18 @@ object GeofenceHelper {
             return
         }
 
-        // Tambahkan geofence
         try{
             geofencingClient.addGeofences(
                 getGeofencingRequest(geofences),
                 getGeofencePendingIntent(context)
             ).addOnCompleteListener{
                 if (it.isSuccessful){
-                    Log.d("Geo", "add: success")
+                    Log.d("Success added Geofence", "add: success")
                 }
                 else{
-                    Log.e("Geo", "add: ${it.exception?.message}")
+                    Log.e("Failure added Geofence", "add: ${it.exception?.message}")
                 }
             }
-            Log.d("FailedGeofence", "addGeofences: Success add", )
         }
         catch (e:SecurityException){
             Log.e("FailedGeofence", "addGeofences: ${e.message}", )

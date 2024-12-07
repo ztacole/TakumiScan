@@ -2,6 +2,8 @@ package com.zetta.takumiscan.presentation.main.menu.home
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,6 +25,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
+import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
 import com.zetta.takumiscan.util.Constants.GEOFENCE_LATITUDE
 import com.zetta.takumiscan.util.Constants.GEOFENCE_LONGITUDE
@@ -45,7 +48,7 @@ class HomeFragment : Fragment() {
         val locationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
 
         if (locationGranted) {
-            checkLocation()
+            startLocationUpdates()
         }
     }
     private lateinit var binding: FragmentHomeBinding
@@ -58,13 +61,16 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
-        geofenceList.add(GeofenceData(
-            GEOFENCE_ID,
-            GEOFENCE_LATITUDE,
-            GEOFENCE_LONGITUDE,
-            GEOFENCE_RADIUS,
-            Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
-        ))
+        geofenceList.add(
+            GeofenceData
+            (
+                GEOFENCE_ID,
+                GEOFENCE_LATITUDE,
+                GEOFENCE_LONGITUDE,
+                GEOFENCE_RADIUS,
+                Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
+            )
+        )
         geofencingClient = LocationServices.getGeofencingClient(requireActivity())
 
         locationCallback = object : LocationCallback() {
@@ -75,30 +81,52 @@ class HomeFragment : Fragment() {
                         else Log.e("Geofence", "onLocationResult: Failure")
                     }
                 }
+                locationResult.lastLocation?.let {
+                    checkUserLocation(it)
+                }
             }
         }
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         if (savedInstanceState == null) {
             startClock()
             setLocation()
         }
 
         binding.btnSetLocation.setOnClickListener{
-            setLocation()
+            startLocationUpdates()
         }
 
         return binding.root
     }
 
+    override fun onStop() {
+        super.onStop()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
     private fun setLocation(){
-        requestPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
             )
-        )
+        }
+        else{
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                )
+            )
+        }
     }
 
     private fun startClock() {
@@ -130,7 +158,7 @@ class HomeFragment : Fragment() {
         binding.lblSecond.text = wibFormatSecond.format(utcSecond!!)
     }
 
-    private fun checkLocation() {
+    private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
             return
@@ -141,6 +169,7 @@ class HomeFragment : Fragment() {
             5000L
         ).build()
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
@@ -148,13 +177,22 @@ class HomeFragment : Fragment() {
         )
     }
 
-//    private fun isUserInsideGeofence(lat: Double, lon: Double): Boolean {
-//        val distance = FloatArray(1)
-//        Location.distanceBetween(
-//            lat, lon,
-//            GEOFENCE_LATITUDE, GEOFENCE_LONGITUDE,
-//            distance
-//        )
-//        return distance[0] <= GEOFENCE_RADIUS
-//    }
+    private fun checkUserLocation(userLocation: Location) {
+        val targetLocation = Location("target")
+        targetLocation.latitude = GEOFENCE_LATITUDE
+        targetLocation.longitude = GEOFENCE_LONGITUDE
+
+        val distance = userLocation.distanceTo(targetLocation)
+
+        if (distance <= GEOFENCE_RADIUS){
+            binding.lblLocation.text = "SMKN 24 Jakarta"
+            (requireActivity() as MainActivity).binding.btnQR.isEnabled = true
+            Log.d("User Location", "checkUserLocation: Inside Geofence")
+        }
+        else{
+            binding.lblLocation.text = "Tidak diketahui"
+            (requireActivity() as MainActivity).binding.btnQR.isEnabled = false
+            Log.d("User Location", "checkUserLocation: Outside Geofence")
+        }
+    }
 }
