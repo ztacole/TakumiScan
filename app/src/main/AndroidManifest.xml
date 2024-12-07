@@ -29,13 +29,7 @@
             android:name=".presentation.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".util.geofence.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.main.menu.scan.ScanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.GeofencingActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.auth.LoginActivity"
@@ -50,15 +44,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.WebViewActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.main.MainActivity"
             android:exported="false" />
 
         <receiver
             android:name=".util.geofence.GeofenceBroadcastReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.location.GEOFENCE_TRANSITION" />
             </intent-filter>
