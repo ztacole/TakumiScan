@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
             if (cacheController.isAlreadyOpen()) intent = Intent(this, RegisterActivity::class.java)
             if (cacheController.isAlreadyRegister()) intent = Intent(this, LoginActivity::class.java)
 
-//            val intent = Intent(this, MainActivity::class.java)
+//            intent = Intent(this, MainActivity::class.java)
 
             startActivity(intent)
             finish()
