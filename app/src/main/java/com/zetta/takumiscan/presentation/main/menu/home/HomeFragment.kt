@@ -1,6 +1,7 @@
 package com.zetta.takumiscan.presentation.main.menu.home
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -23,9 +24,11 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
 import com.zetta.takumiscan.presentation.main.MainActivity
+import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
 import com.zetta.takumiscan.util.Constants.GEOFENCE_LATITUDE
 import com.zetta.takumiscan.util.Constants.GEOFENCE_LONGITUDE
@@ -41,6 +44,7 @@ class HomeFragment : Fragment() {
     private val geofenceList = mutableListOf<GeofenceData>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var main: MainActivity
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -60,6 +64,11 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        main = (requireActivity() as MainActivity)
+
+        main.binding.btnQR.setOnClickListener {
+            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+        }
 
         geofenceList.add(
             GeofenceData
@@ -93,7 +102,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnSetLocation.setOnClickListener{
-            startLocationUpdates()
+            binding.lblLocation.text = "Sedang melacak lokasi.."
+            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+            }
+            setLocation()
         }
 
         return binding.root
@@ -186,12 +200,20 @@ class HomeFragment : Fragment() {
 
         if (distance <= GEOFENCE_RADIUS){
             binding.lblLocation.text = "SMKN 24 Jakarta"
-            (requireActivity() as MainActivity).binding.btnQR.isEnabled = true
+            main.binding.btnQR.setOnClickListener {
+                Intent(main, ScanActivity::class.java).also {
+                    it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
+                    startActivity(it)
+                }
+            }
             Log.d("User Location", "checkUserLocation: Inside Geofence")
         }
         else{
-            binding.lblLocation.text = "Tidak diketahui"
-            (requireActivity() as MainActivity).binding.btnQR.isEnabled = false
+            binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
+            val main = (requireActivity() as MainActivity)
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Fitur ini hanya aktif jika anda berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+            }
             Log.d("User Location", "checkUserLocation: Outside Geofence")
         }
     }

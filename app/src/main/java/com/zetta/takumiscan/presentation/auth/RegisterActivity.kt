@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.datatransport.runtime.scheduling.jobscheduling.SchedulerConfig.Flag
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityRegisterBinding
 import com.zetta.takumiscan.model.DataUser
@@ -52,10 +51,10 @@ class RegisterActivity : AppCompatActivity() {
                     password = binding.tbPassword.text.toString(),
                     photo = photo!!
                 )
-                dbHelper.insertUser(data)
+                dbHelper.registerUser(data)
                 CacheController(this).setStatus("Registered")
                 Intent(this, LoginActivity::class.java).also {
-                    startActivity(intent)
+                    startActivity(it)
                     finish()
                 }
             }

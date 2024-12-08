@@ -75,6 +75,7 @@
             <ImageView
                 android:id="@+id/imgProfile"
                 android:layout_width="44dp"
+                android:scaleType="centerCrop"
                 android:layout_height="44dp"
                 app:srcCompat="@drawable/photo_profile_default" />
         </androidx.cardview.widget.CardView>
@@ -94,8 +95,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+        android:layout_height="70dp"
         android:background="@color/dark_gray"
         app:elevation="16dp"
         app:itemIconTint="@color/white"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:translationZ="100dp"
         app:cardCornerRadius="40dp"
         app:cardElevation="16dp"
@@ -125,8 +125,8 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/baseline_qr_code_scanner_24"
                 app:tint="@color/white" />

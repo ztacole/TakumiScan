@@ -1,12 +1,14 @@
 package com.zetta.takumiscan.presentation.main
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.zetta.takumiscan.R
+import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.databinding.ActivityMainBinding
 import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
@@ -14,6 +16,8 @@ import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private lateinit var dbHelper: DBHelper
+
     private val listFragment = listOf(
         HomeFragment(),
         HistoryFragment()
@@ -22,9 +26,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        dbHelper = DBHelper(this)
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.navy)
 
+        setUI()
+        setNavigation()
+    }
+
+    private fun setUI(){
+        val data = dbHelper.getDataUser()
+        val profile = BitmapFactory.decodeByteArray(data.photo, 0, data.photo.size)
+
+        binding.imgProfile.setImageBitmap(profile)
+        binding.lblNama.text = data.nama
+        binding.lblKelas.text = data.kelas
+    }
+
+    private fun setNavigation(){
         binding.pager.isUserInputEnabled = false
 
         binding.pager.adapter = object : FragmentStateAdapter(this){
@@ -58,11 +77,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-        binding.btnQR.setOnClickListener {
-            Intent(this, ScanActivity::class.java).also {
-                startActivity(it)
-            }
-        }
     }
 }

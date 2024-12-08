@@ -92,6 +92,7 @@
             <EditText
                 android:id="@+id/tbNISN"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/baseline_credit_card_24"
                 android:drawablePadding="8dp" />
