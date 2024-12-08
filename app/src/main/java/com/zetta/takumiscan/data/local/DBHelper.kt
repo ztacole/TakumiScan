@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.zetta.takumiscan.model.DataUser
+import com.zetta.takumiscan.model.History
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object{
@@ -35,7 +36,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "$COLUMN_PHOTO blob not null," +
                 "$COLUMN_PASsWORD text not null)"
         val queryHistory = "create table $TABLE_HISTORY (" +
-                "$COLUMN_ID integer primary key," +
+                "$COLUMN_ID integer primary key autoincrement," +
                 "$COLUMN_STATUS text not null," +
                 "$COLUMN_PHOTO blob not null," +
                 "$COLUMN_EMOSI text not null," +
@@ -86,5 +87,17 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.close()
 
         return data!!
+    }
+
+    fun addHistory(data: History){
+        val db = readableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_STATUS, data.status)
+            put(COLUMN_PHOTO, data.photo)
+            put(COLUMN_STATUS, data.mood)
+            put(COLUMN_STATUS, data.dateTime)
+        }
+        db.insert(TABLE_HISTORY, null, values)
+        db.close()
     }
 }
