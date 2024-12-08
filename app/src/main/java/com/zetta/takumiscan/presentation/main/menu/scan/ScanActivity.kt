@@ -2,6 +2,7 @@ package com.zetta.takumiscan.presentation.main.menu.scan
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
@@ -32,19 +33,33 @@ import java.util.concurrent.Executors
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.DialogMoodBinding
+import com.zetta.takumiscan.databinding.DialogStoryBinding
 import com.zetta.takumiscan.model.DataUser
+import com.zetta.takumiscan.model.History
+import com.zetta.takumiscan.util.ImagePickerHelper
 import java.net.URL
 
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
+
+    private lateinit var imagePickerHelper: ImagePickerHelper
+
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var barcodeScanner: BarcodeScanner
-    private var isFlashOn = false
     private lateinit var camera: Camera
     private lateinit var cameraControl: CameraControl
     private lateinit var cameraProvider: ProcessCameraProvider
+    private var isFlashOn = false
+
     private lateinit var dbHelper: DBHelper
     private lateinit var dataUser: DataUser
+
+    private var mood: String? = null
+    private var photo: ByteArray? = null
+    private val BATAS_WAKTU_HADIR = java.util.Calendar.getInstance().apply {
+        set(java.util.Calendar.HOUR_OF_DAY, 7)
+        set(java.util.Calendar.MINUTE, 0)
+    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +68,13 @@ class ScanActivity : AppCompatActivity() {
         binding = ActivityScanBinding.inflate(layoutInflater)
         dbHelper = DBHelper(this)
         dataUser = dbHelper.getDataUser()
+        imagePickerHelper = ImagePickerHelper(
+            activity = this,
+            onSelected = { _, byteArray ->
+                photo = byteArray
+                showDialogMood()
+            }
+        )
         setContentView(binding.root)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -152,7 +174,10 @@ class ScanActivity : AppCompatActivity() {
             Toast.makeText(this, "Scan berhasil", Toast.LENGTH_SHORT).show()
             Log.d("QR URL", "handleBarcode: $url")
             Log.d("Custom URL", "handleBarcode: $customUrl")
-            showDialogMood()
+
+            Toast.makeText(this, "Silahkan absen wajah", Toast.LENGTH_SHORT).show()
+            imagePickerHelper.openCamera()
+
             stopCamera()
         }else{
             Toast.makeText(this, "Failed to scan QR Code", Toast.LENGTH_SHORT).show()
@@ -184,13 +209,19 @@ class ScanActivity : AppCompatActivity() {
 
         dialog.setOnShowListener{
             moodView.cardSad.setOnClickListener {
-
+                mood = "Sedih"
+                showDialogStory()
+                dialog.dismiss()
             }
             moodView.cardFlat.setOnClickListener {
+                mood = "Datar"
+                showDialogStory()
                 dialog.dismiss()
             }
             moodView.cardSmile.setOnClickListener {
-
+                mood = "Senang"
+                showDialogStory()
+                dialog.dismiss()
             }
         }
 
@@ -198,6 +229,28 @@ class ScanActivity : AppCompatActivity() {
     }
 
     private fun showDialogStory(){
+        val storyView = DialogStoryBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(this)
+            .setView(storyView.root)
+            .setCancelable(false)
+            .create()
 
+        dialog.setOnShowListener{
+            storyView.btnKirim.setOnClickListener {
+                val data = History(
+                    id = 0,
+                    status = if (Calendar.getInstance().time.after(BATAS_WAKTU_HADIR.time)) "Tepat Waktu" else "Terlambat",
+                    photo = photo!!,
+                    mood = mood!!,
+                    dateTime = Calendar.getInstance().time.toString()
+                )
+
+                dbHelper.addHistory(data)
+                dialog.dismiss()
+                finish()
+            }
+        }
+
+        dialog.show()
     }
 }
