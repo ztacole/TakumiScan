@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
 
 class ImagePickerHelper(private val activity: AppCompatActivity, private val onSelected: (Bitmap, ByteArray)-> Unit) {
+
     private val cameraLauncher = activity.registerForActivityResult(
         ActivityResultContracts.TakePicturePreview()
     ){ bitmap ->
@@ -42,7 +43,7 @@ class ImagePickerHelper(private val activity: AppCompatActivity, private val onS
             .show()
     }
 
-    private fun openCamera(){
+    fun openCamera(){
         cameraLauncher.launch(null)
     }
 
