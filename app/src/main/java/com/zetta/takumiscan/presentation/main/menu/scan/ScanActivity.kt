@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraControl
@@ -30,6 +31,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
+import com.zetta.takumiscan.databinding.DialogMoodBinding
 import com.zetta.takumiscan.model.DataUser
 import java.net.URL
 
@@ -40,6 +42,7 @@ class ScanActivity : AppCompatActivity() {
     private var isFlashOn = false
     private lateinit var camera: Camera
     private lateinit var cameraControl: CameraControl
+    private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var dbHelper: DBHelper
     private lateinit var dataUser: DataUser
 
@@ -95,7 +98,7 @@ class ScanActivity : AppCompatActivity() {
         ).build()
 
         cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().setResolutionSelector(resolutionSelector)
                 .build()
                 .also {
@@ -115,6 +118,10 @@ class ScanActivity : AppCompatActivity() {
             )
             cameraControl = camera.cameraControl
         }, ContextCompat.getMainExecutor(this))
+    }
+
+    private fun stopCamera(){
+        if (::cameraProvider.isInitialized) cameraProvider.unbindAll()
     }
 
     @OptIn(ExperimentalGetImage::class)
@@ -145,6 +152,8 @@ class ScanActivity : AppCompatActivity() {
             Toast.makeText(this, "Scan berhasil", Toast.LENGTH_SHORT).show()
             Log.d("QR URL", "handleBarcode: $url")
             Log.d("Custom URL", "handleBarcode: $customUrl")
+            showDialogMood()
+            stopCamera()
         }else{
             Toast.makeText(this, "Failed to scan QR Code", Toast.LENGTH_SHORT).show()
         }
@@ -164,5 +173,31 @@ class ScanActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+    }
+
+    private fun showDialogMood(){
+        val moodView = DialogMoodBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(this)
+            .setView(moodView.root)
+            .setCancelable(false)
+            .create()
+
+        dialog.setOnShowListener{
+            moodView.cardSad.setOnClickListener {
+
+            }
+            moodView.cardFlat.setOnClickListener {
+                dialog.dismiss()
+            }
+            moodView.cardSmile.setOnClickListener {
+
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun showDialogStory(){
+
     }
 }
