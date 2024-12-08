@@ -4,6 +4,6 @@ data class History(
     val id: Int,
     val status: String,
     val photo: ByteArray,
-    val emosi: String,
+    val mood: String,
     val dateTime: String
 )
