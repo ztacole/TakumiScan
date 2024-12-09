@@ -1,11 +1,15 @@
 package com.zetta.takumiscan.presentation.main.menu.scan
 
 import android.Manifest
+import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.util.TypedValue
+import android.view.animation.Interpolator
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +40,7 @@ import com.zetta.takumiscan.databinding.DialogMoodBinding
 import com.zetta.takumiscan.databinding.DialogStoryBinding
 import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.model.History
+import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.util.ImagePickerHelper
 import java.net.URL
 
@@ -247,10 +252,52 @@ class ScanActivity : AppCompatActivity() {
 
                 dbHelper.addHistory(data)
                 dialog.dismiss()
-                finish()
+                animateOnExit()
             }
         }
 
         dialog.show()
+    }
+
+    private fun animateOnExit(){
+        binding.frameAnimation.animate().apply {
+            scaleY(100f)
+            duration = 300
+            withEndAction {
+                binding.lblMessage.animate().apply {
+                    alpha(1f)
+                    duration = 300
+                    withEndAction {
+                        val translate = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
+
+                        binding.iconSuccess.animate().apply {
+                            scaleY(1.15f)
+                            scaleX(1.15f)
+                            translationY(-translate)
+                            duration = 500
+                            withEndAction {
+                                binding.iconSuccess.animate().apply {
+                                    scaleY(1f)
+                                    scaleX(1f)
+                                    translationY(translate)
+                                    duration = 300
+                                    withEndAction {
+                                        binding.iconSuccess.animate().apply {
+                                            scaleY(1f)
+                                            duration = 600
+                                            withEndAction {
+                                                finish()
+                                                binding.iconSuccess.animate().alpha(0f).setDuration(200)
+                                                binding.lblMessage.animate().alpha(0f).setDuration(200)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -96,10 +97,8 @@ class HomeFragment : Fragment() {
             }
         }
 
-        if (savedInstanceState == null) {
-            startClock()
-            setLocation()
-        }
+        startClock()
+        setLocation()
 
         binding.btnSetLocation.setOnClickListener{
             binding.lblLocation.text = "Sedang melacak lokasi.."
@@ -123,7 +122,7 @@ class HomeFragment : Fragment() {
         startLocationUpdates()
     }
 
-    private fun setLocation(){
+    private fun setLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             requestPermissionLauncher.launch(
                 arrayOf(
@@ -137,7 +136,7 @@ class HomeFragment : Fragment() {
             requestPermissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
         }
@@ -174,6 +173,7 @@ class HomeFragment : Fragment() {
 
     private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
             Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
             return
         }
