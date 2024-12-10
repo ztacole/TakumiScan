@@ -244,7 +244,7 @@ class ScanActivity : AppCompatActivity() {
             storyView.btnKirim.setOnClickListener {
                 val data = History(
                     id = 0,
-                    status = if (Calendar.getInstance().time.after(BATAS_WAKTU_HADIR.time)) "Tepat Waktu" else "Terlambat",
+                    status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu" else "Terlambat",
                     photo = photo!!,
                     mood = mood!!,
                     dateTime = Calendar.getInstance().time.toString()
