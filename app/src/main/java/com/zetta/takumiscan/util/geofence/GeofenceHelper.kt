@@ -58,21 +58,15 @@ object GeofenceHelper {
             return
         }
 
-        try{
-            geofencingClient.addGeofences(
-                getGeofencingRequest(geofences),
-                getGeofencePendingIntent(context)
-            ).addOnCompleteListener{
-                if (it.isSuccessful){
-                    Log.d("Success added Geofence", "add: success")
-                }
-                else{
-                    Log.e("Failure added Geofence", "add: ${it.exception?.message}")
-                }
+        geofencingClient.addGeofences(
+            getGeofencingRequest(geofences),
+            getGeofencePendingIntent(context)
+        ).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("Success added Geofence", "add: success")
+            } else {
+                Log.e("Failure added Geofence", "add: ${it.exception?.message}")
             }
-        }
-        catch (e:SecurityException){
-            Log.e("FailedGeofence", "addGeofences: ${e.message}", )
         }
     }
 }
