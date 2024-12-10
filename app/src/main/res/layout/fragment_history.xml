@@ -36,8 +36,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:background="@drawable/gradient"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_white"
         android:translationZ="-100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
