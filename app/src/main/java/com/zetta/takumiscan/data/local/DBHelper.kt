@@ -23,7 +23,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         private const val COLUMN_ID = "ID"
         private const val COLUMN_STATUS = "status"
         private const val COLUMN_PHOTO = "photo"
-        private const val COLUMN_EMOSI = "emosi"
+        private const val COLUMN_MOOD = "mood"
         private const val COLUMN_DATETIME = "dateTime"
     }
 
@@ -39,7 +39,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "$COLUMN_ID integer primary key autoincrement," +
                 "$COLUMN_STATUS text not null," +
                 "$COLUMN_PHOTO blob not null," +
-                "$COLUMN_EMOSI text not null," +
+                "$COLUMN_MOOD text not null," +
                 "$COLUMN_DATETIME text not null)"
         db?.execSQL(queryDataUser)
         db?.execSQL(queryHistory)
@@ -94,10 +94,38 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         val values = ContentValues().apply {
             put(COLUMN_STATUS, data.status)
             put(COLUMN_PHOTO, data.photo)
-            put(COLUMN_STATUS, data.mood)
-            put(COLUMN_STATUS, data.dateTime)
+            put(COLUMN_MOOD, data.mood)
+            put(COLUMN_DATETIME, data.dateTime)
         }
         db.insert(TABLE_HISTORY, null, values)
         db.close()
+    }
+
+    fun getListHistory(): List<History>{
+        val db = readableDatabase
+        val histories = mutableListOf<History>()
+        val query = "SELECT * FROM $TABLE_HISTORY"
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()){
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val status = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+            val photo = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO))
+            val mood = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOOD))
+            val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATETIME))
+
+            val history = History(
+                id = id,
+                status = status,
+                photo = photo,
+                mood = mood,
+                dateTime = dateTime
+            )
+            histories.add(history)
+        }
+
+        cursor.close()
+        db.close()
+        return histories
     }
 }
