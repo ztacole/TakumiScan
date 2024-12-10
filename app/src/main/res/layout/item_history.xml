@@ -17,6 +17,7 @@
             android:id="@+id/imgHistory"
             android:layout_width="55dp"
             android:layout_height="55dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,9 +42,19 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:text="17-09-2024 06:17:21"
+            android:textAlignment="textEnd"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconMood"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/mood_smile"
+            app:tint="@color/white" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
