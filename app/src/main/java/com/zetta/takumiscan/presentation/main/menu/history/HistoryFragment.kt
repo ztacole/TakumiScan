@@ -21,11 +21,27 @@ class HistoryFragment : Fragment() {
         dbHelper = DBHelper(requireContext())
         binding = FragmentHistoryBinding.inflate(layoutInflater)
 
-        val histories = dbHelper.getListHistory()
-
-        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvHistory.adapter = HistoryAdapter(histories)
+        binding.rvHistory.layoutManager = object : LinearLayoutManager(requireContext()){
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
+        initialize()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initialize()
+    }
+
+    fun initialize(){
+        val histories = dbHelper.getListHistory()
+        val status = dbHelper.getStatus()
+
+        binding.rvHistory.adapter = HistoryAdapter(histories)
+        binding.lblTepatWaktu.text = status[0].toString()
+        binding.lblTerlambat.text = status[1].toString()
     }
 }
