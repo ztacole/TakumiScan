@@ -128,4 +128,22 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.close()
         return histories
     }
+
+    fun getStatus(): List<Int>{
+        val db = readableDatabase
+        val status = mutableListOf<Int>()
+
+        val queryTepatWaktu = "SELECT COUNT($COLUMN_STATUS) AS Jumlah FROM $TABLE_HISTORY WHERE $COLUMN_STATUS = 'Tepat Waktu'"
+        val queryTerlambat = "SELECT COUNT($COLUMN_STATUS) AS Jumlah FROM $TABLE_HISTORY WHERE $COLUMN_STATUS = 'Terlambat'"
+        val cursorTepatWaktu = db.rawQuery(queryTepatWaktu, null).apply { moveToNext() }
+        val cursorTerlambat = db.rawQuery(queryTerlambat, null).apply { moveToNext() }
+
+        val tepatWaktu = cursorTepatWaktu.getInt(cursorTepatWaktu.getColumnIndexOrThrow("Jumlah"))
+        val terlambat = cursorTerlambat.getInt(cursorTerlambat.getColumnIndexOrThrow("Jumlah"))
+
+        status.add(tepatWaktu)
+        status.add(terlambat)
+
+        return status
+    }
 }
