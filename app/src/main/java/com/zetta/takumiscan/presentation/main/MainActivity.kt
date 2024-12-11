@@ -3,20 +3,24 @@ package com.zetta.takumiscan.presentation.main
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.databinding.ActivityMainBinding
+import com.zetta.takumiscan.model.History
 import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
 import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: DBHelper
+    private lateinit var histories: List<History>
 
     private val listFragment = listOf(
         HomeFragment(),
@@ -27,11 +31,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         dbHelper = DBHelper(this)
+        histories = dbHelper.getListHistory()
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.navy)
 
         setUI()
         setNavigation()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentHistories = dbHelper.getListHistory()
+        if (histories.size != currentHistories.size) binding.pager.currentItem = 1
     }
 
     private fun setUI(){
@@ -55,6 +66,13 @@ class MainActivity : AppCompatActivity() {
                 return listFragment[position]
             }
         }
+
+        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                if (binding.pager.currentItem == 1) binding.bottomNavigationView.selectedItemId = R.id.history
+                else binding.bottomNavigationView.selectedItemId = R.id.home
+            }
+        })
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId){
