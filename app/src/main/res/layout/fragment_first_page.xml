@@ -6,13 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".presentation.onboarding.fragment.FirstPageFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Page"
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/onboarding_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_bold"
+        android:textStyle="bold"
+        android:text="Aplikasi ini adalah Aplikasi absensi Siswa dan Siswi SMKN 24 JAKARTA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="603dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

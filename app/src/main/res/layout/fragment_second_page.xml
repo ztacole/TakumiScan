@@ -6,13 +6,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.onboarding.fragment.SecondPageFragment">
 
-    <TextView
+
+    <ImageView
+        android:id="@+id/imageView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Second Page"
+        android:src="@drawable/onboarding_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:src="@drawable/circle_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_bold"
+        android:textStyle="bold"
+        android:text="Aplikasi ini menggunakan Scan QR kode dan Wajah Siswa maupun Siswi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="603dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
