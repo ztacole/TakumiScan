@@ -17,7 +17,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         private const val COLUMN_NAMA = "nama"
         private const val COLUMN_KELAS = "kelas"
         private const val COLUMN_JURUSAN = "jurusan"
-        private const val COLUMN_PASsWORD = "password"
+        private const val COLUMN_PASSWORD = "password"
 
         private const val TABLE_HISTORY = "History"
         private const val COLUMN_ID = "ID"
@@ -34,7 +34,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "$COLUMN_KELAS text not null," +
                 "$COLUMN_JURUSAN text not null," +
                 "$COLUMN_PHOTO blob not null," +
-                "$COLUMN_PASsWORD text not null)"
+                "$COLUMN_PASSWORD text not null)"
         val queryHistory = "create table $TABLE_HISTORY (" +
                 "$COLUMN_ID integer primary key autoincrement," +
                 "$COLUMN_STATUS text not null," +
@@ -61,7 +61,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
             put(COLUMN_KELAS, data.kelas)
             put(COLUMN_JURUSAN, data.jurusan)
             put(COLUMN_PHOTO, data.photo)
-            put(COLUMN_PASsWORD, data.password)
+            put(COLUMN_PASSWORD, data.password)
         }
         db.insert(TABLE_DATA_USER, null, values)
         db.close()
@@ -79,7 +79,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
             val kelas = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KELAS))
             val jurusan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_JURUSAN))
             val photo = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO))
-            val password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASsWORD))
+            val password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
 
             data = DataUser(nisn, nama, kelas, jurusan, photo, password)
         }
@@ -144,6 +144,16 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         status.add(tepatWaktu)
         status.add(terlambat)
 
+        db.close()
+        cursorTerlambat.close()
+        cursorTepatWaktu.close()
+
         return status
+    }
+
+    fun deleteAllHistories(){
+        val db = readableDatabase
+        db.delete(TABLE_HISTORY, null, null)
+        db.close()
     }
 }
