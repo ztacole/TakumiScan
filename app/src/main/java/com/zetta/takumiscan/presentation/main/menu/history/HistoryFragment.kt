@@ -1,5 +1,7 @@
 package com.zetta.takumiscan.presentation.main.menu.history
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.FragmentHistoryBinding
+import java.util.Calendar
+import java.util.Locale
 
 class HistoryFragment : Fragment() {
     private lateinit var binding: FragmentHistoryBinding
@@ -36,12 +40,26 @@ class HistoryFragment : Fragment() {
         initialize()
     }
 
-    fun initialize(){
+    private fun initialize(){
         val histories = dbHelper.getListHistory()
         val status = dbHelper.getStatus()
+
+        val history = histories[0]
+        if (isMonthGreaterThanCurrent(history.dateTime)) dbHelper.deleteAllHistories()
 
         binding.rvHistory.adapter = HistoryAdapter(histories)
         binding.lblTepatWaktu.text = status[0].toString()
         binding.lblTerlambat.text = status[1].toString()
+    }
+
+    private fun isMonthGreaterThanCurrent(dateString: String): Boolean{
+        val calendar = Calendar.getInstance()
+        val date = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH).parse(dateString)
+        calendar.time = date
+
+        val month = calendar.get(Calendar.MONTH)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+
+        return currentMonth > month
     }
 }
