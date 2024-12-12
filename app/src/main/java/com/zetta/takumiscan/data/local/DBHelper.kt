@@ -104,7 +104,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
     fun getListHistory(): List<History>{
         val db = readableDatabase
         val histories = mutableListOf<History>()
-        val query = "SELECT * FROM $TABLE_HISTORY"
+        val query = "SELECT * FROM $TABLE_HISTORY ORDER BY $COLUMN_ID DESC"
         val cursor = db.rawQuery(query, null)
 
         while (cursor.moveToNext()){
