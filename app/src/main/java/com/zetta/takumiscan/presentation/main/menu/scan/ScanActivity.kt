@@ -62,8 +62,8 @@ class ScanActivity : AppCompatActivity() {
     private var mood: String? = null
     private var photo: ByteArray? = null
     private val BATAS_WAKTU_HADIR = java.util.Calendar.getInstance().apply {
-        set(java.util.Calendar.HOUR_OF_DAY, 7)
-        set(java.util.Calendar.MINUTE, 0)
+        set(java.util.Calendar.HOUR_OF_DAY, 6)
+        set(java.util.Calendar.MINUTE, 30)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
