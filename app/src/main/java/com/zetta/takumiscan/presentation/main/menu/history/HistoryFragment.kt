@@ -44,7 +44,7 @@ class HistoryFragment : Fragment() {
         val histories = dbHelper.getListHistory()
         val status = dbHelper.getStatus()
 
-        val history = histories[0]
+        val history = histories[histories.size-1]
         if (isMonthGreaterThanCurrent(history.dateTime)) dbHelper.deleteAllHistories()
 
         binding.rvHistory.adapter = HistoryAdapter(histories)
