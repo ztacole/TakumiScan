@@ -1,7 +1,10 @@
 package com.zetta.takumiscan.util
 
+import android.Manifest
+import android.content.Context
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
@@ -35,12 +38,25 @@ class ImagePickerHelper(private val activity: AppCompatActivity, private val onS
             .setTitle("Pilih Sumber Gambar")
             .setItems(options) { dialog, which ->
                 when (which) {
-                    0 -> openCamera()
+                    0 -> requestCameraPermission()
                     1 -> openGallery()
                     2 -> dialog.dismiss()
                 }
             }
             .show()
+    }
+
+    private fun requestCameraPermission(){
+        val requestPermissionLauncher = activity.registerForActivityResult(
+            ActivityResultContracts.RequestPermission())
+        {isGranted:Boolean ->
+            if(isGranted){
+                openCamera()
+            }else{
+                Toast.makeText(activity, "Izin kamera diperlukan!", Toast.LENGTH_SHORT).show()
+            }
+        }
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
     fun openCamera(){
