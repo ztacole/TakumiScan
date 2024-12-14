@@ -36,6 +36,7 @@ import com.zetta.takumiscan.util.Constants.GEOFENCE_LONGITUDE
 import com.zetta.takumiscan.util.Constants.GEOFENCE_RADIUS
 import com.zetta.takumiscan.util.geofence.GeofenceHelper
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -57,6 +58,7 @@ class HomeFragment : Fragment() {
         }
     }
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var dbHelper: DBHelper
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
@@ -65,6 +67,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        dbHelper = DBHelper(requireContext())
         main = (requireActivity() as MainActivity)
 
         main.binding.btnQR.setOnClickListener {
@@ -108,6 +111,8 @@ class HomeFragment : Fragment() {
             }
             setLocation()
         }
+
+        if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
 
         return binding.root
     }
@@ -191,6 +196,21 @@ class HomeFragment : Fragment() {
         )
     }
 
+    private fun isAlreadyPresence(): Boolean{
+        val histories = dbHelper.getListHistory()
+        val newestHistory = histories[0]
+
+        val calendar = Calendar.getInstance()
+        val dateTime = android.icu.text.SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
+            .parse(newestHistory.dateTime)
+        calendar.time = dateTime
+
+        val date = calendar.get(Calendar.DATE)
+        val currentDate = Calendar.getInstance().get(Calendar.DATE)
+
+        return date == currentDate
+    }
+
     private fun checkUserLocation(userLocation: Location) {
         val targetLocation = Location("target")
         targetLocation.latitude = GEOFENCE_LATITUDE
@@ -212,9 +232,22 @@ class HomeFragment : Fragment() {
             binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
             val main = (requireActivity() as MainActivity)
             main.binding.btnQR.setOnClickListener {
-                Toast.makeText(main, "Fitur ini hanya aktif jika anda berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+                Toast.makeText(main, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+            }
+            main.binding.btnQR.setOnClickListener {
+                Intent(main, ScanActivity::class.java).also {
+                    it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
+                    startActivity(it)
+                }
             }
             Log.d("User Location", "checkUserLocation: Outside Geofence")
+        }
+
+        if (isAlreadyPresence()) {
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Kamu sudah absen", Toast.LENGTH_SHORT).show()
+            }
+            binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
         }
     }
 }
