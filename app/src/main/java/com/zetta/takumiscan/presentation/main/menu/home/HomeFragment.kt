@@ -248,12 +248,6 @@ class HomeFragment : Fragment() {
             main.binding.btnQR.setOnClickListener {
                 Toast.makeText(main, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
             }
-            main.binding.btnQR.setOnClickListener {
-                Intent(main, ScanActivity::class.java).also {
-                    it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
-                    startActivity(it)
-                }
-            }
             Log.d("User Location", "checkUserLocation: Outside Geofence")
         }
 
