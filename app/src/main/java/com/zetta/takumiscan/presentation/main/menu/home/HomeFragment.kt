@@ -29,6 +29,8 @@ import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
 import com.zetta.takumiscan.presentation.main.MainActivity
+import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesActivity
+import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
 import com.zetta.takumiscan.util.Constants.GEOFENCE_LATITUDE
@@ -113,6 +115,18 @@ class HomeFragment : Fragment() {
         }
 
         if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
+
+        binding.tbAddNote.setOnClickListener {
+            Intent(requireContext(), NotesDetailActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.lblShowNotes.setOnClickListener {
+            Intent(requireContext(), NotesActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
         return binding.root
     }
