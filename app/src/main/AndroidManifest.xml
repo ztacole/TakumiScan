@@ -28,6 +28,12 @@
         android:theme="@style/Theme.TakumiScan"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.main.menu.home.notes.NotesDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.main.menu.home.notes.NotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="false" />
         <activity
