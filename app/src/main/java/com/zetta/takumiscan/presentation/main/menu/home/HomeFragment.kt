@@ -223,6 +223,7 @@ class HomeFragment : Fragment() {
 
     private fun isAlreadyPresence(): Boolean{
         val histories = dbHelper.getListHistory()
+        if (histories.isEmpty()) return false
         val newestHistory = histories[0]
 
         val calendar = Calendar.getInstance()
