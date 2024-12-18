@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -28,8 +29,10 @@ import com.google.android.gms.location.Priority
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
+import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesActivity
+import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesAdapter
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
@@ -63,6 +66,8 @@ class HomeFragment : Fragment() {
     private lateinit var dbHelper: DBHelper
     private val handler = Handler(Looper.getMainLooper())
 
+    private lateinit var notes: List<Note>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,38 +77,11 @@ class HomeFragment : Fragment() {
         dbHelper = DBHelper(requireContext())
         main = (requireActivity() as MainActivity)
 
-        main.binding.btnQR.setOnClickListener {
-            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-        }
-
-        geofenceList.add(
-            GeofenceData
-            (
-                GEOFENCE_ID,
-                GEOFENCE_LATITUDE,
-                GEOFENCE_LONGITUDE,
-                GEOFENCE_RADIUS,
-                Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
-            )
-        )
-        geofencingClient = LocationServices.getGeofencingClient(requireActivity())
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations){
-                    GeofenceHelper.addGeofences(requireContext(), geofencingClient, geofenceList){ success ->
-                        if (success) Log.d("Geofence", "onLocationResult: Success")
-                        else Log.e("Geofence", "onLocationResult: Failure")
-                    }
-                }
-                locationResult.lastLocation?.let {
-                    checkUserLocation(it)
-                }
-            }
-        }
+        setup()
 
         startClock()
         setLocation()
+        setNotesData()
 
         binding.btnSetLocation.setOnClickListener{
             binding.lblLocation.text = "Sedang melacak lokasi.."
@@ -131,6 +109,38 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun setup(){
+        main.binding.btnQR.setOnClickListener {
+            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+        }
+
+        geofenceList.add(
+            GeofenceData
+                (
+                GEOFENCE_ID,
+                GEOFENCE_LATITUDE,
+                GEOFENCE_LONGITUDE,
+                GEOFENCE_RADIUS,
+                Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT
+            )
+        )
+        geofencingClient = LocationServices.getGeofencingClient(requireActivity())
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                for (location in locationResult.locations){
+                    GeofenceHelper.addGeofences(requireContext(), geofencingClient, geofenceList){ success ->
+                        if (success) Log.d("Geofence", "onLocationResult: Success")
+                        else Log.e("Geofence", "onLocationResult: Failure")
+                    }
+                }
+                locationResult.lastLocation?.let {
+                    checkUserLocation(it)
+                }
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         fusedLocationClient.removeLocationUpdates(locationCallback)
@@ -139,6 +149,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
+        setNotesData()
     }
 
     private fun setLocation() {
@@ -256,6 +267,21 @@ class HomeFragment : Fragment() {
                 Toast.makeText(main, "Kamu sudah absen", Toast.LENGTH_SHORT).show()
             }
             binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
+        }
+    }
+
+    private fun setNotesData(){
+        binding.rvNotes.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        notes = dbHelper.getListNotes()
+        if (notes.isEmpty()){
+            binding.lblEmpty.visibility = View.VISIBLE
+            binding.rvNotes.visibility = View.INVISIBLE
+        }
+        else{
+            binding.lblEmpty.visibility = View.INVISIBLE
+            binding.rvNotes.visibility = View.VISIBLE
+            binding.rvNotes.adapter = NotesAdapter(notes)
         }
     }
 }
