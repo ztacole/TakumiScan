@@ -7,7 +7,7 @@ class CacheController(private val context: Context) {
 
     fun setStatus(status: String) = spStatus.edit().putString("status", status).apply()
 
-    fun getStatus(): String = spStatus.getString("status", "Opening").toString()
+    private fun getStatus(): String = spStatus.getString("status", "Opening").toString()
 
     fun isAlreadyOpen(): Boolean = getStatus() == "Not Registered"
 
