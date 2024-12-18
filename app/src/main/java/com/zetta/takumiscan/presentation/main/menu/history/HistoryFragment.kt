@@ -43,6 +43,7 @@ class HistoryFragment : Fragment() {
     private fun initialize(){
         val histories = dbHelper.getListHistory()
         val status = dbHelper.getStatus()
+        if (histories.isEmpty()) return
 
         val history = histories[histories.size-1]
         if (isMonthGreaterThanCurrent(history.dateTime)) dbHelper.deleteAllHistories()
