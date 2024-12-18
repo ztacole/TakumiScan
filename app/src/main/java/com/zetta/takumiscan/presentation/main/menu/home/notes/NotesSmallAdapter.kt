@@ -16,7 +16,8 @@ class NotesSmallAdapter(private val listNotes: List<Note>): RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return if (listNotes.size > 3) 3
+        else listNotes.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
