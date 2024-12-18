@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.model.History
+import com.zetta.takumiscan.model.Note
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object{
@@ -25,6 +26,11 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         private const val COLUMN_PHOTO = "photo"
         private const val COLUMN_MOOD = "mood"
         private const val COLUMN_DATETIME = "dateTime"
+
+        private const val TABLE_NOTE = "Note"
+        private const val COLUMN_TITLE = "title"
+        private const val COLUMN_NOTES = "notes"
+        private const val COLUMN_DATE = "date"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -35,21 +41,31 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "$COLUMN_JURUSAN text not null," +
                 "$COLUMN_PHOTO blob not null," +
                 "$COLUMN_PASSWORD text not null)"
+
         val queryHistory = "create table $TABLE_HISTORY (" +
                 "$COLUMN_ID integer primary key autoincrement," +
                 "$COLUMN_STATUS text not null," +
                 "$COLUMN_PHOTO blob not null," +
                 "$COLUMN_MOOD text not null," +
                 "$COLUMN_DATETIME text not null)"
+
+        val queryNote = "create table $TABLE_NOTE (" +
+                "$COLUMN_ID integer primary key autoincrement," +
+                "$COLUMN_TITLE text," +
+                "$COLUMN_NOTES text not null," +
+                "$COLUMN_DATE text)"
         db?.execSQL(queryDataUser)
         db?.execSQL(queryHistory)
+        db?.execSQL(queryNote)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         val query = "drop table if exists $TABLE_HISTORY"
         val query2 = "drop table if exists $TABLE_DATA_USER"
+        val query3 = "drop table if exists $TABLE_NOTE"
         db?.execSQL(query)
         db?.execSQL(query2)
+        db?.execSQL(query3)
         onCreate(db)
     }
 
@@ -155,5 +171,42 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         val db = readableDatabase
         db.delete(TABLE_HISTORY, null, null)
         db.close()
+    }
+
+    fun addNote(data: Note){
+        val db = readableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_TITLE, data.title)
+            put(COLUMN_NOTES, data.notes)
+            put(COLUMN_DATE, data.date)
+        }
+        db.insert(TABLE_NOTE, null, values)
+        db.close()
+    }
+
+    fun getListNotes(): List<Note>{
+        val db = readableDatabase
+        val notes = mutableListOf<Note>()
+        val query = "SELECT * FROM $TABLE_NOTE ORDER BY $COLUMN_ID DESC"
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()){
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
+            val textNotes = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
+            val date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+
+            val note = Note(
+                id = id,
+                title = title,
+                notes = textNotes,
+                date = date,
+            )
+            notes.add(note)
+        }
+
+        cursor.close()
+        db.close()
+        return notes
     }
 }
