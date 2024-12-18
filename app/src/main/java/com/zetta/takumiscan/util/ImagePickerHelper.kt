@@ -38,25 +38,12 @@ class ImagePickerHelper(private val activity: AppCompatActivity, private val onS
             .setTitle("Pilih Sumber Gambar")
             .setItems(options) { dialog, which ->
                 when (which) {
-                    0 -> requestCameraPermission()
+                    0 -> openCamera()
                     1 -> openGallery()
                     2 -> dialog.dismiss()
                 }
             }
             .show()
-    }
-
-    private fun requestCameraPermission(){
-        val requestPermissionLauncher = activity.registerForActivityResult(
-            ActivityResultContracts.RequestPermission())
-        {isGranted:Boolean ->
-            if(isGranted){
-                openCamera()
-            }else{
-                Toast.makeText(activity, "Izin kamera diperlukan!", Toast.LENGTH_SHORT).show()
-            }
-        }
-        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
     fun openCamera(){
