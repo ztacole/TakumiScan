@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
@@ -32,7 +31,7 @@ import com.zetta.takumiscan.model.GeofenceData
 import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesActivity
-import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesAdapter
+import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesSmallAdapter
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
@@ -282,7 +281,7 @@ class HomeFragment : Fragment() {
         else{
             binding.lblEmpty.visibility = View.INVISIBLE
             binding.rvNotes.visibility = View.VISIBLE
-            binding.rvNotes.adapter = NotesAdapter(notes)
+            binding.rvNotes.adapter = NotesSmallAdapter(notes)
         }
     }
 }
