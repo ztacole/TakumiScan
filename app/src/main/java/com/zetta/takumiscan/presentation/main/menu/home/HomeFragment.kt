@@ -245,6 +245,8 @@ class HomeFragment : Fragment() {
 
         if (distance <= GEOFENCE_RADIUS){
             binding.lblLocation.text = "SMKN 24 Jakarta"
+            binding.lblDenah.visibility = View.VISIBLE
+            binding.scrollDenah.visibility = View.VISIBLE
             main.binding.btnQR.setOnClickListener {
                 Intent(main, ScanActivity::class.java).also {
                     it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
@@ -255,6 +257,8 @@ class HomeFragment : Fragment() {
         }
         else{
             binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
+            binding.lblDenah.visibility = View.GONE
+            binding.scrollDenah.visibility = View.GONE
             val main = (requireActivity() as MainActivity)
             main.binding.btnQR.setOnClickListener {
                 Toast.makeText(main, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
