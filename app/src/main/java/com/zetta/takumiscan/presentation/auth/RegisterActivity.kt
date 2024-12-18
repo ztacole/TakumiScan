@@ -1,9 +1,11 @@
 package com.zetta.takumiscan.presentation.auth
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.zetta.takumiscan.data.local.DBHelper
@@ -32,6 +34,8 @@ class RegisterActivity : AppCompatActivity() {
                 binding.profileImage.setImageBitmap(bitmap)
             }
         )
+
+        requestCameraPermission()
 
         binding.btnRegister.setOnClickListener {
             if (binding.tbNISN.text.isEmpty() || binding.tbNama.text.isEmpty() || binding.tbKelas.text.isEmpty() || binding.tbJurusan.text.isEmpty() || binding.tbPassword.text.isEmpty()){
@@ -71,6 +75,19 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun selectImage(){
         imagePickerHelper.showImagePickerDialog()
+    }
+
+    private fun requestCameraPermission(){
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission())
+        {isGranted:Boolean ->
+            if (!isGranted){
+                Toast.makeText(this, "Izin kamera diperlukan!", Toast.LENGTH_SHORT).show()
+                binding.cameraIcon.isEnabled = false
+                binding.profileImage.isEnabled = false
+            }
+        }
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
     private fun showDialog(onSuccess: ()-> Unit){
