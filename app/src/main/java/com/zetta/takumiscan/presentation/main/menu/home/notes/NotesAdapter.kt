@@ -2,27 +2,43 @@ package com.zetta.takumiscan.presentation.main.menu.home.notes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
 import com.zetta.takumiscan.databinding.ItemNoteBinding
+import com.zetta.takumiscan.databinding.ItemNoteHeaderBinding
 import com.zetta.takumiscan.model.Note
 
-class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ItemNoteBinding): RecyclerView.ViewHolder(binding.root) {
+class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val VIEW_TYPE_HEADER = 0
+    private val VIEW_TYPE_ITEM = 1
 
+    inner class HeaderViewHolder(val binding: ItemNoteHeaderBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ItemViewHolder(val binding: ItemNoteBinding): RecyclerView.ViewHolder(binding.root)
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_HEADER){
+            val view = ItemNoteHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HeaderViewHolder(view)
+        }
+        else{
+            val view = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemViewHolder(view)
+        }
     }
 
     override fun getItemCount(): Int {
         return listNotes.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = listNotes[position]
-        holder.binding.lblTitle.text = note.title ?: "Tak Berjudul"
-        holder.binding.lblNote.text = note.notes
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (position > 0) {
+            val note = listNotes[position]
+            val view = (holder as ItemViewHolder)
+            view.binding.lblTitle.text = note.title ?: "Tak Berjudul"
+            view.binding.lblNote.text = note.notes
+        }
     }
 }
