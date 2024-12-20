@@ -6,16 +6,24 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zetta.takumiscan.R
+import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
+import com.zetta.takumiscan.util.MarginItemDecoration
 
 class NotesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesBinding
+    private lateinit var dbHelper: DBHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotesBinding.inflate(layoutInflater)
+        dbHelper = DBHelper(this)
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.navy)
+
+        setRecyclerView()
 
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -26,5 +34,13 @@ class NotesActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+
+    private fun setRecyclerView(){
+        binding.rvNotes.layoutManager = LinearLayoutManager(this)
+        binding.rvNotes.addItemDecoration(MarginItemDecoration(0, 80))
+
+        val listNotes = dbHelper.getListNotes()
+        binding.rvNotes.adapter = NotesAdapter(listNotes)
     }
 }
