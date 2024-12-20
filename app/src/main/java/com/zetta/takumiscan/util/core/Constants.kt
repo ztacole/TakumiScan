@@ -1,4 +1,4 @@
-package com.zetta.takumiscan.util
+package com.zetta.takumiscan.util.core
 
 object Constants {
     const val GEOFENCE_RADIUS = 100f // in meters
