@@ -11,6 +11,7 @@ import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
 import com.zetta.takumiscan.util.MarginItemDecoration
+import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
 
 class NotesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesBinding
@@ -38,7 +39,10 @@ class NotesActivity : AppCompatActivity() {
 
     private fun setRecyclerView(){
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
-        binding.rvNotes.addItemDecoration(MarginItemDecoration(0, 80))
+
+        val bottomMargin = dpToPx(0)
+        val lastItemBottomMargin = dpToPx(96)
+        binding.rvNotes.addItemDecoration(MarginItemDecoration(bottomMargin, lastItemBottomMargin))
 
         val listNotes = dbHelper.getListNotes()
         binding.rvNotes.adapter = NotesAdapter(listNotes)
