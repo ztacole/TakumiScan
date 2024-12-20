@@ -34,10 +34,10 @@ import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesActivity
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesSmallAdapter
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
-import com.zetta.takumiscan.util.Constants.GEOFENCE_ID
-import com.zetta.takumiscan.util.Constants.GEOFENCE_LATITUDE
-import com.zetta.takumiscan.util.Constants.GEOFENCE_LONGITUDE
-import com.zetta.takumiscan.util.Constants.GEOFENCE_RADIUS
+import com.zetta.takumiscan.util.core.Constants.GEOFENCE_ID
+import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LATITUDE
+import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LONGITUDE
+import com.zetta.takumiscan.util.core.Constants.GEOFENCE_RADIUS
 import com.zetta.takumiscan.util.geofence.GeofenceHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
