@@ -1,5 +1,6 @@
 package com.zetta.takumiscan.presentation.main.menu.home.notes
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,13 @@ class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<Recy
             val view = (holder as ItemViewHolder)
             view.binding.lblTitle.text = note.title ?: "Tak Berjudul"
             view.binding.lblNote.text = note.notes
+            view.itemView.setOnClickListener {
+                Intent(view.itemView.context, NotesDetailActivity::class.java).also {
+                    it.putExtra("mode", "edit")
+                    it.putExtra("id", note.id)
+                    view.itemView.context.startActivity(it)
+                }
+            }
         }
     }
 }
