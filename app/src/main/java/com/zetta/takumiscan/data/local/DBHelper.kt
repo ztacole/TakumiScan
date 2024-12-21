@@ -209,4 +209,10 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.close()
         return notes
     }
+
+    fun deleteNote(id: Int){
+        val db = readableDatabase
+        val query = "$COLUMN_ID = $id"
+        db.delete(TABLE_NOTE, query, null)
+    }
 }
