@@ -19,13 +19,28 @@ import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 class NotesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesBinding
     private lateinit var dbHelper: DBHelper
+    private lateinit var cacheController: CacheController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotesBinding.inflate(layoutInflater)
         dbHelper = DBHelper(this)
+        cacheController = CacheController(this)
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.navy)
+
+        if (!cacheController.isFirstTimeOpenNotes()){
+            showDialog(
+                title = "Informasi",
+                message = "Swipe ke kiri untuk hapus catatan.\nSwipe ke kanan untuk edit catatan.",
+                positiveButtonText = "Ok",
+                onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
+                    cacheController.alreadyOpenedNotes()
+                    dialog.dismiss()
+                },
+                cancellable = false
+            )
+        }
 
         setRecyclerView()
         loadData()
