@@ -30,12 +30,12 @@ class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<Recy
     }
 
     override fun getItemCount(): Int {
-        return listNotes.size
+        return listNotes.size + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position > 0) {
-            val note = listNotes[position]
+            val note = listNotes[position - 1]
             val view = (holder as ItemViewHolder)
             view.binding.lblTitle.text = note.title ?: "Tak Berjudul"
             view.binding.lblNote.text = note.notes
