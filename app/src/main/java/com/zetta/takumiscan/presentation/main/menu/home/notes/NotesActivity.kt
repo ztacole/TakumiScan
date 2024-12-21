@@ -1,5 +1,6 @@
 package com.zetta.takumiscan.presentation.main.menu.home.notes
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
+import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.util.CacheController
 import com.zetta.takumiscan.util.MarginItemDecoration
 import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
@@ -20,6 +22,9 @@ class NotesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesBinding
     private lateinit var dbHelper: DBHelper
     private lateinit var cacheController: CacheController
+
+    private lateinit var listNotes: MutableList<Note>
+    private lateinit var adapter : NotesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,10 @@ class NotesActivity : AppCompatActivity() {
             )
         }
 
+        listNotes = mutableListOf()
+        adapter = NotesAdapter(listNotes)
         setRecyclerView()
+
         loadData()
 
         binding.btnBack.setOnClickListener {
@@ -56,9 +64,20 @@ class NotesActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadData(){
-        val listNotes = dbHelper.getListNotes()
-        val adapter = NotesAdapter(listNotes)
+        listNotes.clear()
+        listNotes.addAll(dbHelper.getListNotes())
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun setRecyclerView(){
+        binding.rvNotes.layoutManager = LinearLayoutManager(this)
+
+        val bottomMargin = dpToPx(0)
+        val lastItemBottomMargin = dpToPx(96)
+        binding.rvNotes.addItemDecoration(MarginItemDecoration(bottomMargin, lastItemBottomMargin))
+
         binding.rvNotes.adapter = adapter
 
         val touchHelper = ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
@@ -86,24 +105,23 @@ class NotesActivity : AppCompatActivity() {
             ) {
                 val note = listNotes[viewHolder.adapterPosition - 1]
                 if (direction == ItemTouchHelper.LEFT){
-                    Toast.makeText(this@NotesActivity, "Deleted ${viewHolder.adapterPosition}, id ${note.id}", Toast.LENGTH_SHORT).show()
+                    listNotes.removeAt(viewHolder.adapterPosition - 1)
+                    dbHelper.deleteNote(note.id)
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    Toast.makeText(this@NotesActivity, "Catatan berhasil dihapus", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    Toast.makeText(this@NotesActivity, "Edited", Toast.LENGTH_SHORT).show()
+                    Intent(this@NotesActivity, NotesDetailActivity::class.java).also {
+                        it.putExtra("mode", "edit")
+                        it.putExtra("id", note.id)
+                        startActivity(it)
+                    }
+                    Toast.makeText(this@NotesActivity, "Edit Mode", Toast.LENGTH_SHORT).show()
                 }
             }
         })
 
         touchHelper.attachToRecyclerView(binding.rvNotes)
-    }
-
-    private fun setRecyclerView(){
-        binding.rvNotes.layoutManager = LinearLayoutManager(this)
-
-        val bottomMargin = dpToPx(0)
-        val lastItemBottomMargin = dpToPx(96)
-        binding.rvNotes.addItemDecoration(MarginItemDecoration(bottomMargin, lastItemBottomMargin))
     }
 
     override fun onResume() {
