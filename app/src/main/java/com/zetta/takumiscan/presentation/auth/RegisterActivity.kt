@@ -1,6 +1,7 @@
 package com.zetta.takumiscan.presentation.auth
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.zetta.takumiscan.databinding.ActivityRegisterBinding
 import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.util.CacheController
 import com.zetta.takumiscan.util.ImagePickerHelper
+import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -46,22 +48,31 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Tambahkan foto untuk identitasmu!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            showDialog {
-                val data = DataUser(
-                    nisn = binding.tbNISN.text.toString(),
-                    nama = binding.tbNama.text.toString(),
-                    kelas = binding.tbKelas.text.toString(),
-                    jurusan = binding.tbJurusan.text.toString(),
-                    password = binding.tbPassword.text.toString(),
-                    photo = photo!!
-                )
-                dbHelper.registerUser(data)
-                CacheController(this).setStatus("Registered")
-                Intent(this, LoginActivity::class.java).also {
-                    startActivity(it)
-                    finish()
+            showDialog(
+                title = "Konfirmasi",
+                message = "Pembuatan akun hanya akan dilakukan sekali, kamu tidak akan bisa mengubahnya di kemudian hari.\n\nApa kamu yakin semua data telah terisi dengan benar?",
+                positiveButtonText = "Yakin",
+                onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
+                    val data = DataUser(
+                        nisn = binding.tbNISN.text.toString(),
+                        nama = binding.tbNama.text.toString(),
+                        kelas = binding.tbKelas.text.toString(),
+                        jurusan = binding.tbJurusan.text.toString(),
+                        password = binding.tbPassword.text.toString(),
+                        photo = photo!!
+                    )
+                    dbHelper.registerUser(data)
+                    CacheController(this).setStatus("Registered")
+                    Intent(this, LoginActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                },
+                negativeButtonText = "Tidak",
+                onNegativeButtonClick = DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
                 }
-            }
+            )
         }
 
         binding.cardProfile.setOnClickListener {
@@ -88,17 +99,5 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-    }
-
-    private fun showDialog(onSuccess: ()-> Unit){
-        AlertDialog.Builder(this)
-            .setTitle("Konfirmasi")
-            .setMessage("Pembuatan akun hanya akan dilakukan sekali, kamu tidak akan bisa mengubahnya di kemudian hari.\n\nApa kamu yakin semua data telah terisi dengan benar?")
-            .setPositiveButton("Yakin"){_, _->
-                onSuccess()
-            }
-            .setNegativeButton("Tidak"){dialog, _ ->
-                dialog.dismiss()
-            }.show()
     }
 }
