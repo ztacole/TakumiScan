@@ -14,8 +14,8 @@ import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
 import com.zetta.takumiscan.model.Note
+import com.zetta.takumiscan.presentation.main.menu.home.notes.adapter.NotesAdapter
 import com.zetta.takumiscan.util.CacheController
-import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 
 class NotesActivity : AppCompatActivity() {

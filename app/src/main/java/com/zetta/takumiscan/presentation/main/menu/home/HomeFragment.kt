@@ -31,7 +31,7 @@ import com.zetta.takumiscan.model.GeofenceData
 import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesActivity
-import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesSmallAdapter
+import com.zetta.takumiscan.presentation.main.menu.home.notes.adapter.NotesSmallAdapter
 import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.presentation.main.menu.scan.ScanActivity
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_ID

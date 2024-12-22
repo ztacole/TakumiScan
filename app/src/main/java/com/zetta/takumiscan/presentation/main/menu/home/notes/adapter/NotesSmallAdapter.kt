@@ -1,4 +1,4 @@
-package com.zetta.takumiscan.presentation.main.menu.home.notes
+package com.zetta.takumiscan.presentation.main.menu.home.notes.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

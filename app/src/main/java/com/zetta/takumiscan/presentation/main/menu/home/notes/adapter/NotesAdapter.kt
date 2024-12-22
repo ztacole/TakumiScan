@@ -1,4 +1,4 @@
-package com.zetta.takumiscan.presentation.main.menu.home.notes
+package com.zetta.takumiscan.presentation.main.menu.home.notes.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zetta.takumiscan.databinding.ItemNoteBinding
 import com.zetta.takumiscan.databinding.ItemNoteHeaderBinding
 import com.zetta.takumiscan.model.Note
+import com.zetta.takumiscan.presentation.main.menu.home.notes.NotesDetailActivity
 import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
 
 class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
