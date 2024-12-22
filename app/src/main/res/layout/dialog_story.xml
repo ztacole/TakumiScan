@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="120dp"
-                android:background="@drawable/tb_border"
+                android:background="@drawable/tb_dialog_border"
                 android:ems="10"
                 android:gravity="top"
                 android:hint="Masukkan cerita anda disini"
