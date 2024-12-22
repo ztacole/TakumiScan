@@ -67,7 +67,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelper: DBHelper
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var geofenceTriggeredListener: OnGeofenceTriggeredListener
 
     private lateinit var notes: List<Note>
 
@@ -79,7 +78,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         dbHelper = DBHelper(requireContext())
         main = (requireActivity() as MainActivity)
-        geofenceTriggeredListener = (requireContext() as OnGeofenceTriggeredListener)
 
         setup()
 
@@ -95,6 +93,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
 
         binding.tbAddNote.setOnClickListener {
             Intent(requireContext(), NotesDetailActivity::class.java).also {
+                it.putExtra("mode", "add")
                 startActivity(it)
             }
         }
