@@ -51,7 +51,6 @@ class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<Recy
             view.binding.lblNote.text = note.notes
             view.itemView.setOnClickListener {
                 Intent(view.itemView.context, NotesDetailActivity::class.java).also {
-                    it.putExtra("mode", "edit")
                     it.putExtra("id", note.id)
                     view.itemView.context.startActivity(it)
                 }

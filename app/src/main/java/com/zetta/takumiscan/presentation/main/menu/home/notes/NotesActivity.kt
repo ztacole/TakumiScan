@@ -59,6 +59,7 @@ class NotesActivity : AppCompatActivity() {
 
         binding.btnAddNote.setOnClickListener {
             Intent(this, NotesDetailActivity::class.java).also {
+                it.putExtra("mode", "add")
                 startActivity(it)
             }
         }
