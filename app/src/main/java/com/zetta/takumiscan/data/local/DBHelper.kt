@@ -119,6 +119,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.beginTransaction()
         try {
             val values = ContentValues().apply {
+                if (data.id != 0) put(COLUMN_ID, data.id)
                 put(COLUMN_STATUS, data.status)
                 put(COLUMN_PHOTO, data.photo)
                 put(COLUMN_MOOD, data.mood)
