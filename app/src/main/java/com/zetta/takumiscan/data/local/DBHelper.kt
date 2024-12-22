@@ -70,17 +70,26 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
     }
 
     fun registerUser(data: DataUser){
-        val db = readableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_NISN, data.nisn)
-            put(COLUMN_NAMA, data.nama)
-            put(COLUMN_KELAS, data.kelas)
-            put(COLUMN_JURUSAN, data.jurusan)
-            put(COLUMN_PHOTO, data.photo)
-            put(COLUMN_PASSWORD, data.password)
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put(COLUMN_NISN, data.nisn)
+                put(COLUMN_NAMA, data.nama)
+                put(COLUMN_KELAS, data.kelas)
+                put(COLUMN_JURUSAN, data.jurusan)
+                put(COLUMN_PHOTO, data.photo)
+                put(COLUMN_PASSWORD, data.password)
+            }
+            db.insert(TABLE_DATA_USER, null, values)
+            db.setTransactionSuccessful()
         }
-        db.insert(TABLE_DATA_USER, null, values)
-        db.close()
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 
     fun getDataUser(): DataUser {
@@ -106,15 +115,24 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
     }
 
     fun addHistory(data: History){
-        val db = readableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_STATUS, data.status)
-            put(COLUMN_PHOTO, data.photo)
-            put(COLUMN_MOOD, data.mood)
-            put(COLUMN_DATETIME, data.dateTime)
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put(COLUMN_STATUS, data.status)
+                put(COLUMN_PHOTO, data.photo)
+                put(COLUMN_MOOD, data.mood)
+                put(COLUMN_DATETIME, data.dateTime)
+            }
+            db.insert(TABLE_HISTORY, null, values)
+            db.setTransactionSuccessful()
         }
-        db.insert(TABLE_HISTORY, null, values)
-        db.close()
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 
     fun getListHistory(): List<History>{
@@ -168,20 +186,38 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
     }
 
     fun deleteAllHistories(){
-        val db = readableDatabase
-        db.delete(TABLE_HISTORY, null, null)
-        db.close()
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            db.delete(TABLE_HISTORY, null, null)
+            db.setTransactionSuccessful()
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 
     fun addNote(data: Note){
-        val db = readableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_TITLE, data.title)
-            put(COLUMN_NOTES, data.notes)
-            put(COLUMN_DATE, data.date)
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put(COLUMN_TITLE, data.title)
+                put(COLUMN_NOTES, data.notes)
+                put(COLUMN_DATE, data.date)
+            }
+            db.insert(TABLE_NOTE, null, values)
+            db.setTransactionSuccessful()
         }
-        db.insert(TABLE_NOTE, null, values)
-        db.close()
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 
     fun getListNotes(): List<Note>{
@@ -211,8 +247,18 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
     }
 
     fun deleteNote(id: Int){
-        val db = readableDatabase
-        val query = "$COLUMN_ID = $id"
-        db.delete(TABLE_NOTE, query, null)
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val query = "$COLUMN_ID = ?"
+            db.delete(TABLE_NOTE, query, arrayOf(id.toString()))
+            db.setTransactionSuccessful()
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 }
