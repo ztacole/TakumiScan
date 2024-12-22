@@ -201,16 +201,18 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         }
     }
 
-    fun addNote(data: Note){
+    fun addNote(note: Note): Long{
+        var noteID = -1L
         val db = writableDatabase
         db.beginTransaction()
         try {
             val values = ContentValues().apply {
-                put(COLUMN_TITLE, data.title)
-                put(COLUMN_NOTES, data.notes)
-                put(COLUMN_DATE, data.date)
+                if (note.id != 0) put(COLUMN_ID, note.id)
+                put(COLUMN_TITLE, note.title)
+                put(COLUMN_NOTES, note.notes)
+                put(COLUMN_DATE, note.date)
             }
-            db.insert(TABLE_NOTE, null, values)
+            noteID = db.insert(TABLE_NOTE, null, values)
             db.setTransactionSuccessful()
         }
         catch (e: Exception){
@@ -219,6 +221,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         finally {
             db.endTransaction()
         }
+        return noteID
     }
 
     fun getListNotes(): List<Note>{
@@ -286,5 +289,29 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         cursor.close()
         db.close()
         return note!!
+    }
+
+    fun editNote(id: Int, note: Note){
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put(COLUMN_TITLE, note.title)
+                put(COLUMN_NOTES, note.notes)
+                put(COLUMN_DATE, note.date)
+            }
+            val selection = "$COLUMN_ID = ?"
+            val selectionArgs = arrayOf(id.toString())
+
+            db.update(TABLE_NOTE, values, selection, selectionArgs)
+
+            db.setTransactionSuccessful()
+        }
+        catch (e:Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
     }
 }
