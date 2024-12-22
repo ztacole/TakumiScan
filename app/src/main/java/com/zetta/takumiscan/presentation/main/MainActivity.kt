@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,8 +17,9 @@ import com.zetta.takumiscan.databinding.ActivityMainBinding
 import com.zetta.takumiscan.model.History
 import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
 import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
+import com.zetta.takumiscan.util.geofence.OnGeofenceTriggeredListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnGeofenceTriggeredListener {
     lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: DBHelper
     private lateinit var histories: List<History>
@@ -37,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         setUI()
         setNavigation()
+
+        binding.btnQR.setOnClickListener {
+            Toast.makeText(this, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {
@@ -95,5 +101,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onGeofenceEnter() {
+        binding.btnQR.setOnClickListener {
+            Intent(this, ScanActivity::class.java).also {
+//                it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
+                startActivity(it)
+            }
+        }
+    }
+
+    override fun onGeofenceExit() {
+        binding.btnQR.setOnClickListener {
+            Toast.makeText(this, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+        }
     }
 }
