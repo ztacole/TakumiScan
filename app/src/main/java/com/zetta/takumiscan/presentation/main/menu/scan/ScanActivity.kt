@@ -3,6 +3,7 @@ package com.zetta.takumiscan.presentation.main.menu.scan
 import android.Manifest
 import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -42,6 +43,7 @@ import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.model.History
 import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.util.ImagePickerHelper
+import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 import java.net.URL
 
 class ScanActivity : AppCompatActivity() {
@@ -180,10 +182,17 @@ class ScanActivity : AppCompatActivity() {
             Log.d("QR URL", "handleBarcode: $url")
             Log.d("Custom URL", "handleBarcode: $customUrl")
 
-            Toast.makeText(this, "Silahkan absen wajah", Toast.LENGTH_SHORT).show()
-            imagePickerHelper.openCamera()
-
             stopCamera()
+
+            showDialog(
+                title = "Penting!",
+                message = "Silahkan absen wajah kamu",
+                positiveButtonText = "Ok",
+                onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                    imagePickerHelper.openCamera()
+                }
+            )
         }else{
             Toast.makeText(this, "Failed to scan QR Code", Toast.LENGTH_SHORT).show()
         }
