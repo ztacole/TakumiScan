@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
 import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.util.CacheController
-import com.zetta.takumiscan.util.MarginItemDecoration
 import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 
@@ -74,10 +74,6 @@ class NotesActivity : AppCompatActivity() {
     private fun setRecyclerView(){
         binding.rvNotes.layoutManager = LinearLayoutManager(this)
 
-        val bottomMargin = dpToPx(0)
-        val lastItemBottomMargin = dpToPx(96)
-        binding.rvNotes.addItemDecoration(MarginItemDecoration(bottomMargin, lastItemBottomMargin))
-
         binding.rvNotes.adapter = adapter
 
         val touchHelper = ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
@@ -103,12 +99,18 @@ class NotesActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 direction: Int
             ) {
-                val note = listNotes[viewHolder.adapterPosition - 1]
+                val position = viewHolder.adapterPosition
+                val note = listNotes[position - 1]
                 if (direction == ItemTouchHelper.LEFT){
-                    listNotes.removeAt(viewHolder.adapterPosition - 1)
+                    listNotes.removeAt(position - 1)
                     dbHelper.deleteNote(note.id)
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    Toast.makeText(this@NotesActivity, "Catatan berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    adapter.notifyItemRemoved(position)
+                    Snackbar.make(binding.root, "Catatan  dihapus", Snackbar.LENGTH_LONG)
+                        .setAction("Pulihkan"){
+                            listNotes.add(position - 1, note)
+                            adapter.notifyItemInserted(position)
+                            dbHelper.addNote(note)
+                        }.show()
                 }
                 else{
                     Intent(this@NotesActivity, NotesDetailActivity::class.java).also {
