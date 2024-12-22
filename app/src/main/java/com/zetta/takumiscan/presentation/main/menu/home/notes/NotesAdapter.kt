@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zetta.takumiscan.databinding.ItemNoteBinding
 import com.zetta.takumiscan.databinding.ItemNoteHeaderBinding
 import com.zetta.takumiscan.model.Note
+import com.zetta.takumiscan.util.core.CoreFunction.dpToPx
 
 class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_HEADER = 0
@@ -38,6 +39,13 @@ class NotesAdapter(private val listNotes: List<Note>): RecyclerView.Adapter<Recy
         if (position > 0) {
             val note = listNotes[position - 1]
             val view = (holder as ItemViewHolder)
+            val layoutParams = view.itemView.layoutParams as ViewGroup.MarginLayoutParams
+            if (position == listNotes.size){
+                layoutParams.bottomMargin = view.itemView.context.dpToPx(96)
+            }
+            else{
+                layoutParams.bottomMargin = view.itemView.context.dpToPx(0)
+            }
             view.binding.lblTitle.text = note.title ?: "Tak Berjudul"
             view.binding.lblNote.text = note.notes
             view.itemView.setOnClickListener {
