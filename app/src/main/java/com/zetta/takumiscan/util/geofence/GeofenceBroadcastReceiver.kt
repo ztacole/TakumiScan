@@ -6,29 +6,38 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("Pending Intent", "onReceive: Intent received")
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
-        if (geofencingEvent == null) {
-            Log.e("GeofenceReceiverNull", "Error: geofencingEvent is null")
+
+        if (geofencingEvent == null){
+            Log.e("GeofenceBroadcastReceiver", "GeofencingEvent is null")
             return
         }
 
         if (geofencingEvent.hasError()) {
-            Log.e("GeofenceReceiver", "Error: ${geofencingEvent.errorCode}")
+            val errorMessage = GeofenceStatusCodes.getStatusCodeString(geofencingEvent.errorCode)
+            Log.e("GeofenceBroadcastReceiver", "Error: $errorMessage")
             return
         }
 
-        val geofenceTransition = geofencingEvent.geofenceTransition
-        val transitionMessage = when (geofenceTransition) {
-            Geofence.GEOFENCE_TRANSITION_ENTER -> "Masuk ke dalam geofence"
-            Geofence.GEOFENCE_TRANSITION_EXIT -> "Keluar dari geofence"
-            else -> "Perubahan geofence tidak diketahui"
+        when (geofencingEvent.geofenceTransition){
+            Geofence.GEOFENCE_TRANSITION_ENTER -> {
+                (context as? OnGeofenceTriggeredListener)?.onGeofenceEnter()
+                Log.d("receiver", "onReceive: Entered geofence")
+            }
+            Geofence.GEOFENCE_TRANSITION_EXIT -> {
+                (context as? OnGeofenceTriggeredListener)?.onGeofenceExit()
+                Log.d("receiver", "onReceive: Exited geofence")
+            }
+            else -> {
+                (context as? OnGeofenceTriggeredListener)?.onGeofenceExit()
+                Log.e("receiver", "onReceive: Unknown geofence transition")
+            }
         }
-
-        Toast.makeText(context, transitionMessage, Toast.LENGTH_SHORT).show()
-        Log.i("Tes", "onReceive: $transitionMessage")
     }
 }
