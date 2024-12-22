@@ -26,18 +26,18 @@ object GeofenceHelper {
 
     private fun getGeofencingRequest(geofences: List<Geofence>): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
-            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER or GeofencingRequest.INITIAL_TRIGGER_EXIT)
             addGeofences(geofences)
         }.build()
     }
 
-    fun getGeofencePendingIntent(context: Context): PendingIntent {
+    private fun getGeofencePendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
         return PendingIntent.getBroadcast(
             context,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
 
@@ -48,6 +48,7 @@ object GeofenceHelper {
         callback: (Boolean) -> Unit
     ) {
         val geofences = geofenceDataList.map { createGeofence(it) }
+        Log.d("GeofenceHelper", "Geofences: $geofences")
 
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -61,11 +62,12 @@ object GeofenceHelper {
         geofencingClient.addGeofences(
             getGeofencingRequest(geofences),
             getGeofencePendingIntent(context)
-        ).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("Success added Geofence", "add: success")
-            } else {
-                Log.e("Failure added Geofence", "add: ${it.exception?.message}")
+        ).run {
+            addOnSuccessListener {
+                Log.d("ChildFragment", "Geofences added")
+            }
+            addOnFailureListener {
+                Log.e("ChildFragment", "Failed to add geofences")
             }
         }
     }
