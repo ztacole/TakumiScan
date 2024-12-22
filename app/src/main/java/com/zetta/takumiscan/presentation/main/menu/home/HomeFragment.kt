@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
@@ -47,12 +46,13 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     private lateinit var geofencingClient: GeofencingClient
     private val geofenceList = mutableListOf<GeofenceData>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private lateinit var main: MainActivity
+    private lateinit var userLocation: Location
+    private var distance: Float = 0f
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
             startLocationUpdates()
         }
     }
+    private lateinit var main: MainActivity
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelper: DBHelper
     private val handler = Handler(Looper.getMainLooper())
@@ -87,11 +88,6 @@ class HomeFragment : Fragment() {
         setNotesData()
 
         binding.btnSetLocation.setOnClickListener{
-            binding.lblLocation.text = "Sedang melacak lokasi.."
-            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-            main.binding.btnQR.setOnClickListener {
-                Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-            }
             requestPermission()
         }
 
@@ -113,15 +109,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setup(){
-        main.binding.btnQR.setOnClickListener {
-            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-        }
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1)
-        }
-
-
         geofenceList.add(
             GeofenceData
                 (
@@ -141,7 +128,8 @@ class HomeFragment : Fragment() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 locationResult.lastLocation?.let {
-                    checkUserLocation(it)
+                    userLocation = it
+                    checkUserLocation()
                 }
             }
         }
@@ -214,12 +202,17 @@ class HomeFragment : Fragment() {
             return
         }
 
+        binding.lblLocation.text = "Sedang melacak lokasi.."
+        main.binding.btnQR.setOnClickListener {
+            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+        }
+
         val locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
             5000L
         ).build()
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
@@ -243,25 +236,25 @@ class HomeFragment : Fragment() {
         return date == currentDate
     }
 
-    private fun checkUserLocation(userLocation: Location) {
+    private fun checkUserLocation() {
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val targetLocation = Location("target")
         targetLocation.latitude = GEOFENCE_LATITUDE
         targetLocation.longitude = GEOFENCE_LONGITUDE
 
-        val distance = userLocation.distanceTo(targetLocation)
+        distance = userLocation.distanceTo(targetLocation)
 
         if (distance <= GEOFENCE_RADIUS){
-            binding.lblLocation.text = "SMKN 24 Jakarta"
-            binding.lblDenah.visibility = View.VISIBLE
-            binding.scrollDenah.visibility = View.VISIBLE
-            geofenceTriggeredListener.onGeofenceEnter()
+            onGeofenceEnter()
             Log.d("User Location", "checkUserLocation: Inside Geofence")
         }
         else{
-            binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
-            binding.lblDenah.visibility = View.GONE
-            binding.scrollDenah.visibility = View.GONE
-            geofenceTriggeredListener.onGeofenceExit()
+            onGeofenceExit()
             Log.d("User Location", "checkUserLocation: Outside Geofence")
         }
 
@@ -285,6 +278,27 @@ class HomeFragment : Fragment() {
             binding.lblEmpty.visibility = View.INVISIBLE
             binding.rvNotes.visibility = View.VISIBLE
             binding.rvNotes.adapter = NotesSmallAdapter(notes)
+        }
+    }
+
+    override fun onGeofenceEnter() {
+        binding.lblLocation.text = "SMKN 24 Jakarta"
+        binding.lblDenah.visibility = View.VISIBLE
+        binding.scrollDenah.visibility = View.VISIBLE
+        main.binding.btnQR.setOnClickListener {
+            Intent(main, ScanActivity::class.java).also {
+                it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
+                startActivity(it)
+            }
+        }
+    }
+
+    override fun onGeofenceExit() {
+        binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
+        binding.lblDenah.visibility = View.GONE
+        binding.scrollDenah.visibility = View.GONE
+        main.binding.btnQR.setOnClickListener {
+            Toast.makeText(main, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
         }
     }
 }
