@@ -262,4 +262,29 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
             db.endTransaction()
         }
     }
+
+    fun getNoteByID(id: Int): Note{
+        val db = readableDatabase
+        var note: Note? = null
+        val query = "SELECT * FROM $TABLE_NOTE WHERE $COLUMN_ID = $id"
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()){
+            val ID = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
+            val textNotes = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTES))
+            val date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+
+            note = Note(
+                id = ID,
+                title = title,
+                notes = textNotes,
+                date = date,
+            )
+        }
+
+        cursor.close()
+        db.close()
+        return note!!
+    }
 }
