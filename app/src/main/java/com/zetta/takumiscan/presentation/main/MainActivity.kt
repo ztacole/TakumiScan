@@ -19,7 +19,7 @@ import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
 import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
 import com.zetta.takumiscan.util.geofence.OnGeofenceTriggeredListener
 
-class MainActivity : AppCompatActivity(), OnGeofenceTriggeredListener {
+class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: DBHelper
     private lateinit var histories: List<History>
@@ -101,20 +101,5 @@ class MainActivity : AppCompatActivity(), OnGeofenceTriggeredListener {
                 }
             }
         })
-    }
-
-    override fun onGeofenceEnter() {
-        binding.btnQR.setOnClickListener {
-            Intent(this, ScanActivity::class.java).also {
-//                it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
-                startActivity(it)
-            }
-        }
-    }
-
-    override fun onGeofenceExit() {
-        binding.btnQR.setOnClickListener {
-            Toast.makeText(this, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
-        }
     }
 }
