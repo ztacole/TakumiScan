@@ -41,13 +41,14 @@
             <EditText
                 android:id="@+id/tbStory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:minHeight="120dp"
                 android:background="@drawable/tb_dialog_border"
                 android:ems="10"
-                android:gravity="top"
                 android:hint="Masukkan cerita kamu disini"
-                android:inputType="text"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
                 android:padding="10dp" />
         </androidx.cardview.widget.CardView>
 
