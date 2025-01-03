@@ -14,6 +14,7 @@ import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesDetailBinding
 import com.zetta.takumiscan.model.Note
+import com.zetta.takumiscan.util.notification.NotificationHelper
 
 class NotesDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesDetailBinding
@@ -41,8 +42,8 @@ class NotesDetailActivity : AppCompatActivity() {
 
         binding.btnDate.setOnClickListener{
             val currentDate = Calendar.getInstance()
-            DatePickerDialog(this, DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
-                binding.lblDate.text = "$dayOfMonth-$month-$year"
+            DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                binding.lblDate.text = "$dayOfMonth-${month + 1}-$year"
                 binding.btnDelete.visibility  = View.VISIBLE
             }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH)).show()
         }
@@ -140,6 +141,11 @@ class NotesDetailActivity : AppCompatActivity() {
             return
         }
 
+        date?.let {
+            NotificationHelper.cancelNotification(this, id)
+            NotificationHelper.registerNotification(this, it, id)
+        }
+
         dbHelper.editNote(
             id = id,
             note = Note(id, title, binding.tbNote.text.toString(), date)
@@ -152,6 +158,8 @@ class NotesDetailActivity : AppCompatActivity() {
         if (binding.tbTitle.text.isEmpty()) title = null
         if (binding.lblDate.text.isEmpty()) date = null
 
+
         id = dbHelper.addNote(Note(0, title, binding.tbNote.text.toString(), date)).toInt()
+        date?.let { NotificationHelper.registerNotification(this, it, id) }
     }
 }
