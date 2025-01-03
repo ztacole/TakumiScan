@@ -41,12 +41,15 @@ class HistoryFragment : Fragment() {
     }
 
     private fun initialize(){
-        val histories = dbHelper.getListHistory()
+        var histories = dbHelper.getListHistory()
         val status = dbHelper.getStatus()
         if (histories.isEmpty()) return
 
         val history = histories[histories.size-1]
-        if (isMonthGreaterThanCurrent(history.dateTime)) dbHelper.deleteAllHistories()
+        if (isMonthGreaterThanCurrent(history.dateTime)) {
+            dbHelper.deleteAllHistories()
+            histories = dbHelper.getListHistory()
+        }
 
         binding.rvHistory.adapter = HistoryAdapter(histories)
         binding.lblTepatWaktu.text = status[0].toString()
@@ -58,9 +61,12 @@ class HistoryFragment : Fragment() {
         val date = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH).parse(dateString)
         calendar.time = date
 
+        val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
 
-        return currentMonth > month
+        return if (currentYear == year) currentMonth > month
+        else currentYear > year
     }
 }
