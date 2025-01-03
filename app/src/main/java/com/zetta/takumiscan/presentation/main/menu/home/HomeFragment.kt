@@ -86,6 +86,10 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         setNotesData()
 
         binding.btnSetLocation.setOnClickListener{
+            binding.lblLocation.text = "Sedang melacak lokasi.."
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+            }
             requestPermission()
         }
 
@@ -201,11 +205,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             return
         }
 
-        binding.lblLocation.text = "Sedang melacak lokasi.."
-        main.binding.btnQR.setOnClickListener {
-            Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-        }
-
         val locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
             5000L
@@ -215,7 +214,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
-            null
+            Looper.getMainLooper()
         )
     }
 
