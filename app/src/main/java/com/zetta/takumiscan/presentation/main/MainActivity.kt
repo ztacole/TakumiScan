@@ -17,6 +17,7 @@ import com.zetta.takumiscan.databinding.ActivityMainBinding
 import com.zetta.takumiscan.model.History
 import com.zetta.takumiscan.presentation.main.menu.history.HistoryFragment
 import com.zetta.takumiscan.presentation.main.menu.home.HomeFragment
+import com.zetta.takumiscan.presentation.main.profile.ProfileActivity
 import com.zetta.takumiscan.util.geofence.OnGeofenceTriggeredListener
 
 class MainActivity : AppCompatActivity(){
@@ -40,8 +41,16 @@ class MainActivity : AppCompatActivity(){
         setUI()
         setNavigation()
 
+        initListener()
+    }
+
+    private fun initListener(){
         binding.btnQR.setOnClickListener {
             Toast.makeText(this, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.imgProfile.setOnClickListener {
+            Intent(this, ProfileActivity::class.java).also { startActivity(it) }
         }
     }
 
@@ -49,6 +58,7 @@ class MainActivity : AppCompatActivity(){
         super.onResume()
         val currentHistories = dbHelper.getListHistory()
         if (histories.size != currentHistories.size) binding.pager.currentItem = 1
+        setUI()
     }
 
     private fun setUI(){
