@@ -114,6 +114,26 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return data!!
     }
 
+    fun editPhotoProfileUser(photo: ByteArray){
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val values = ContentValues().apply {
+                put(COLUMN_PHOTO, photo)
+            }
+
+            db.update(TABLE_DATA_USER, values, null, null)
+
+            db.setTransactionSuccessful()
+        }
+        catch (e:Exception){
+            e.printStackTrace()
+        }
+        finally {
+            db.endTransaction()
+        }
+    }
+
     fun addHistory(data: History){
         val db = writableDatabase
         db.beginTransaction()
