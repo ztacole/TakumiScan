@@ -9,7 +9,7 @@ class NotificationReceiver: BroadcastReceiver() {
         NotificationHelper.showNotification(
             context,
             "Catatan Terjadwal",
-            "Ada catatan terjadwal yang harus kamu buka nih!"
+            "Hari ini kamu ada jadwal nih!"
         )
     }
 }
