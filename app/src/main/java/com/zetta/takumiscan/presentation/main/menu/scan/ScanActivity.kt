@@ -50,6 +50,7 @@ class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
 
     private lateinit var imagePickerHelper: ImagePickerHelper
+    private var isCameraGranted = false
 
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var barcodeScanner: BarcodeScanner
@@ -110,6 +111,7 @@ class ScanActivity : AppCompatActivity() {
         val requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission())
         {isGranted:Boolean ->
+            isCameraGranted = isGranted
             if(isGranted){
                 startCamera()
             }else{
@@ -190,7 +192,7 @@ class ScanActivity : AppCompatActivity() {
                 positiveButtonText = "Ok",
                 onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
                     dialog.dismiss()
-                    imagePickerHelper.openCamera()
+                    imagePickerHelper.openCamera(isCameraGranted)
                 }
             )
         }else{

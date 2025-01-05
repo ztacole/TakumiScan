@@ -50,7 +50,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.lblCatatan.text = noteCount.toString()
 
         binding.btnChangeProfile.setOnClickListener {
-            imagePickerHelper.showImagePickerDialog()
+            imagePickerHelper.showImagePickerDialog(true)
         }
     }
 
