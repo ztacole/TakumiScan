@@ -12,19 +12,20 @@ import android.provider.Settings
 import android.text.InputType
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.databinding.ActivityLoginBinding
-import com.zetta.takumiscan.util.notification.NotificationHelper
-import java.util.Calendar
-import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var dbHelper: DBHelper
+
+    private var isPasswordVisible = false
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -42,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         dbHelper = DBHelper(this)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         initListener()
@@ -74,9 +76,19 @@ class LoginActivity : AppCompatActivity() {
             loginProcess()
         }
 
-        binding.iconShowPassword.setOnClickListener {
-            if (binding.tbPass.inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD) binding.tbPass.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            else binding.tbPass.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        binding.icPassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+
+            if (isPasswordVisible){
+                binding.tbPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.icPassword.setImageResource(R.drawable.hidden_password)
+            }
+            else{
+                binding.tbPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.icPassword.setImageResource(R.drawable.show_password)
+            }
+
+            binding.tbPassword.setSelection(binding.tbPassword.text.length)
         }
     }
 
@@ -94,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginProcess(){
         val nisn = binding.tbNISN.text
-        val password = binding.tbPass.text
+        val password = binding.tbPassword.text
         if (nisn.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
             return
