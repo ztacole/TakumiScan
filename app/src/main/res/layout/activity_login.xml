@@ -1,44 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.auth.LoginActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:id="@+id/logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/takumiputih"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-64dp"
+            android:translationZ="-10dp"
+            app:cardCornerRadius="56dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/takumi_logo" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/bgBanner"
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bgsklh" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.57"
+                android:background="@color/black" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="102dp"
+            android:text="Masuk ke akun kamu"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:hint="NISN"
-            app:layout_constraintEnd_toStartOf="@+id/iconShowPassword"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <EditText
                 android:id="@+id/tbNISN"
@@ -57,15 +93,16 @@
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             android:hint="Password"
-            app:layout_constraintEnd_toStartOf="@+id/iconShowPassword"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
             <EditText
-                android:id="@+id/tbPass"
+                android:id="@+id/tbPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,46 +110,38 @@
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/navy"
                 android:ems="10"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:paddingEnd="48dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            style="@style/btnGradient"
             android:id="@+id/btnLogin"
-            android:layout_width="0dp"
+            style="@style/btnGradient"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
             android:text="Login"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
         <ImageView
-            android:id="@+id/iconShowPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/icPassword"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
             app:layout_constraintTop_toTopOf="@+id/textInputLayout2"
-            app:srcCompat="@drawable/baseline_remove_red_eye_24"
+            app:srcCompat="@drawable/show_password"
             app:tint="@color/navy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="131dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-
-        android:text="Login"
-        android:textColor="@color/navy"
-        android:textSize="46dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
