@@ -65,7 +65,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="24dp"
-                app:srcCompat="@drawable/mood_smile"
+                app:srcCompat="@drawable/mood_happy"
                 app:tint="@color/navy" />
         </androidx.cardview.widget.CardView>
 
