@@ -46,7 +46,7 @@
                 android:minHeight="120dp"
                 android:background="@drawable/tb_dialog_border"
                 android:ems="10"
-                android:hint="Masukkan cerita kamu disini"
+                android:hint="Masukkan ceritamu disini"
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical"

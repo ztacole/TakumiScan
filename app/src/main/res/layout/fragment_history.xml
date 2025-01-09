@@ -22,7 +22,7 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/gradient_white"
+        android:background="@color/navy"
         android:translationZ="-100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
