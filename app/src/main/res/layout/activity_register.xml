@@ -170,27 +170,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardProfile" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputNISN"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/tbNISN"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/baseline_credit_card_24"
+                android:drawablePadding="8dp"
+                android:inputType="number"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:hint="NISN"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/tb_regist_border"
+                android:padding="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView20">
-
-                <EditText
-                    android:id="@+id/tbNISN"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_credit_card_24"
-                    android:drawablePadding="8dp"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@+id/textView20"/>
 
             <!-- Nama Input -->
             <com.google.android.material.textfield.TextInputLayout
@@ -204,7 +199,7 @@
                 android:hint="Nama"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputNISN">
+                app:layout_constraintTop_toBottomOf="@+id/tbNISN">
 
                 <EditText
                     android:id="@+id/tbNama"
