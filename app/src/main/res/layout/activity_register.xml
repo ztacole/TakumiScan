@@ -233,9 +233,9 @@
                     android:id="@+id/tbJurusan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:drawableStart="@drawable/baseline_school_24"
-                    android:drawablePadding="8dp" />
+                    android:drawablePadding="8dp"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -257,7 +257,7 @@
                     android:enabled="false"
                     android:inputType="none"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_class_24"
+                    android:drawableStart="@drawable/baseline_sensor_door_24"
                     android:drawablePadding="8dp" />
             </com.google.android.material.textfield.TextInputLayout>
 

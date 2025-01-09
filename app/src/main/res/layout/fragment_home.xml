@@ -15,7 +15,7 @@
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:background="@drawable/gradient"
+            android:background="@color/navy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -88,6 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_location_pin_24"
+                    app:tint = "@color/navy"
                     app:layout_constraintBottom_toBottomOf="@+id/lblLocation"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView7" />
@@ -120,13 +121,13 @@
                     android:id="@+id/btnSetLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_gradient"
+                    android:background="@color/navy"
                     android:contentDescription="location"
                     android:padding="4dp"
                     android:src="@drawable/baseline_location_searching_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toTopOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/white" />
 
                 <TextView
@@ -147,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Keterangan:"
+            android:text="Keterangan "
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView4" />
