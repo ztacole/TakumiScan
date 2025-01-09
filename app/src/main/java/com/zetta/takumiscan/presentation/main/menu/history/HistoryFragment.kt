@@ -25,11 +25,7 @@ class HistoryFragment : Fragment() {
         dbHelper = DBHelper(requireContext())
         binding = FragmentHistoryBinding.inflate(layoutInflater)
 
-        binding.rvHistory.layoutManager = object : LinearLayoutManager(requireContext()){
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
-        }
+        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
         initialize()
 
         return binding.root

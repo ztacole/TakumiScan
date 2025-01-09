@@ -14,6 +14,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
     private lateinit var imagePickerHelper: ImagePickerHelper
 
+    private var isCameraGranted = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -28,6 +30,8 @@ class ProfileActivity : AppCompatActivity() {
         )
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        imagePickerHelper.requestCameraPermission { isCameraGranted = it }
 
         initListener()
         overloadData()
@@ -48,15 +52,15 @@ class ProfileActivity : AppCompatActivity() {
         binding.lblJurusanKelas.text = "Siswa SMKN 24 Jakarta\n${dataUser.jurusan}\n${dataUser.kelas}"
         binding.lblKehadiran.text = attendedCount.toString()
         binding.lblCatatan.text = noteCount.toString()
-
-        binding.btnChangeProfile.setOnClickListener {
-            imagePickerHelper.showImagePickerDialog(true)
-        }
     }
 
     private fun initListener() {
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.btnChangeProfile.setOnClickListener {
+            imagePickerHelper.showImagePickerDialog(isCameraGranted)
         }
     }
 }

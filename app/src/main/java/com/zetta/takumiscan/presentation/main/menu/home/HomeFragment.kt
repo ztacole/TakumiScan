@@ -4,7 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -58,11 +59,19 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         val locationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+        val bootGranted = permissions[Manifest.permission.RECEIVE_BOOT_COMPLETED] ?: false
+        var notificationGranted = true
+
+        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) notificationGranted = permissions[Manifest.permission.POST_NOTIFICATIONS] ?: false
+
+        if (bootGranted && notificationGranted) Log.i("Permissions", "Permission Denied: Izin diterima")
+        else Log.i("Permissions", "Permission Denied: Izin ditolak")
 
         if (locationGranted) {
             startLocationUpdates()
         }
     }
+
     private lateinit var main: MainActivity
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelper: DBHelper
@@ -150,23 +159,18 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     }
 
     private fun requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            requestPermissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            )
-        }
-        else{
-            requestPermissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            )
-        }
+        val permissions = mutableListOf(
+            Manifest.permission.RECEIVE_BOOT_COMPLETED,
+            Manifest.permission.WAKE_LOCK,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        if (VERSION.SDK_INT >= VERSION_CODES.S) permissions.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        requestPermissionLauncher.launch(permissions.toTypedArray())
     }
 
     private fun startClock() {

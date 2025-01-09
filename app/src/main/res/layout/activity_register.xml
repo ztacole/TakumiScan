@@ -1,265 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:background="@color/white"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".presentation.auth.RegisterActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ImageView
+        android:id="@+id/iconSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:translationZ="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/lblMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/success" />
+
+    <TextView
+        android:id="@+id/lblMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:alpha="0"
+        android:text="Yeaayy Pembuatan Akun Berhasil!"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:translationZ="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconSuccess" />
+
+    <FrameLayout
+        android:id="@+id/frameAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="-20dp"
+        android:background="@color/navy"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Background Top Banner -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/takumiputih"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-64dp"
-            android:translationZ="-10dp"
-            app:cardCornerRadius="56dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <!-- Background Top Banner -->
 
             <ImageView
-                android:id="@+id/bgBanner"
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bgsklh" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.57"
-                android:background="@color/black" />
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- NISN Input -->
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-57dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                android:id="@+id/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/takumiputih"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:id="@+id/cardView3"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="0dp">
+                android:layout_marginTop="-64dp"
+                android:translationZ="-10dp"
+                app:cardCornerRadius="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/bgBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/photo_profile_default" />
+                    android:src="@drawable/bgsklh" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.57"
+                    android:background="@color/black" />
+
             </androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
+            <!-- NISN Input -->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cameraIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/navy"
-            app:cardCornerRadius="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardProfile"
-            app:layout_constraintStart_toEndOf="@+id/cardProfile"
-            android:layout_marginStart="-36dp"
-            android:layout_marginBottom="4dp">
-
-            <ImageView
-                android:id="@+id/imgCam"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:srcCompat="@drawable/outline_camera_alt_24"
-                app:tint="@color/white" />
-        </androidx.cardview.widget.CardView>
+                android:layout_marginTop="-57dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Buat akun"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardProfile" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="60dp"
+                    app:cardElevation="0dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputNISN"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:hint="NISN"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20">
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo_profile_default" />
+                </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/tbNISN"
-                android:layout_width="match_parent"
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cameraIcon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_credit_card_24"
-                android:drawablePadding="8dp"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:cardBackgroundColor="@color/navy"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardProfile"
+                app:layout_constraintStart_toEndOf="@+id/cardProfile"
+                android:layout_marginStart="-36dp"
+                android:layout_marginBottom="4dp">
 
-        <!-- Nama Input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputNama"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Nama"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputNISN">
+                <ImageView
+                    android:id="@+id/imgCam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/outline_camera_alt_24"
+                    app:tint="@color/white" />
+            </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/tbNama"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_person_24"
-                android:drawablePadding="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Buat akun"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardProfile" />
 
-        <!-- Kelas Input -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputJurusan"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Jurusan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputNama">
-
-            <AutoCompleteTextView
-                android:id="@+id/tbJurusan"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputNISN"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                android:drawableStart="@drawable/baseline_school_24"
-                android:drawablePadding="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:hint="NISN"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView20">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputKelas"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Kelas"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputJurusan">
+                <EditText
+                    android:id="@+id/tbNISN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_credit_card_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <AutoCompleteTextView
-                android:id="@+id/tbKelas"
-                android:layout_width="match_parent"
-                android:enabled="false"
-                android:inputType="none"
+            <!-- Nama Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputNama"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_class_24"
-                android:drawablePadding="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Nama"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputNISN">
 
-        <!-- Jurusan Input -->
+                <EditText
+                    android:id="@+id/tbNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password Input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputKelas">
+            <!-- Kelas Input -->
 
-            <EditText
-                android:id="@+id/tbPassword"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputJurusan"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:paddingEnd="48dp"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Jurusan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputNama">
 
-        <!-- Eye Icon for Password -->
-        <ImageView
-            android:id="@+id/icPassword"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/show_password"
-            app:layout_constraintBottom_toBottomOf="@id/inputPassword"
-            app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-            app:layout_constraintTop_toTopOf="@id/inputPassword" />
+                <AutoCompleteTextView
+                    android:id="@+id/tbJurusan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:drawableStart="@drawable/baseline_school_24"
+                    android:drawablePadding="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="48dp"
-            android:background="@drawable/btn_gradient"
-            android:text="Register"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputKelas"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Kelas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputJurusan">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tbKelas"
+                    android:layout_width="match_parent"
+                    android:enabled="false"
+                    android:inputType="none"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_class_24"
+                    android:drawablePadding="8dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Jurusan Input -->
+
+            <!-- Password Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputKelas">
+
+                <EditText
+                    android:id="@+id/tbPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="8dp"
+                    android:paddingEnd="48dp"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Eye Icon for Password -->
+            <ImageView
+                android:id="@+id/icPassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/show_password"
+                app:layout_constraintBottom_toBottomOf="@id/inputPassword"
+                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+                app:layout_constraintTop_toTopOf="@id/inputPassword" />
+
+            <!-- Register Button -->
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="48dp"
+                android:background="@drawable/btn_gradient"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

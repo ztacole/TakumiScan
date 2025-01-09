@@ -12,6 +12,7 @@ import android.util.Size
 import android.util.TypedValue
 import android.view.animation.Interpolator
 import android.widget.Toast
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
@@ -223,6 +224,8 @@ class ScanActivity : AppCompatActivity() {
             .setCancelable(false)
             .create()
 
+        dialog.window?.setBackgroundDrawableResource(R.color.transparent)
+
         dialog.setOnShowListener{
             moodView.cardSad.setOnClickListener {
                 mood = "Sedih"
@@ -251,6 +254,8 @@ class ScanActivity : AppCompatActivity() {
             .setCancelable(false)
             .create()
 
+        dialog.window?.setBackgroundDrawableResource(R.color.transparent)
+
         dialog.setOnShowListener{
             storyView.btnKirim.setOnClickListener {
                 val data = History(
@@ -275,6 +280,9 @@ class ScanActivity : AppCompatActivity() {
             scaleY(100f)
             duration = 300
             withEndAction {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.dark(resources.getColor(R.color.navy, theme))
+                )
                 binding.lblMessage.animate().apply {
                     alpha(1f)
                     duration = 300

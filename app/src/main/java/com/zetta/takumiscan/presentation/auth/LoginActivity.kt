@@ -27,18 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
     private var isPasswordVisible = false
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ){ permissions ->
-        val bootGranted = permissions[Manifest.permission.RECEIVE_BOOT_COMPLETED] ?: false
-        var notificationGranted = true
-
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) notificationGranted = permissions[Manifest.permission.POST_NOTIFICATIONS] ?: false
-
-        if (bootGranted && notificationGranted) Log.i("Permissions", "Permission Denied: Izin diterima")
-        else Log.i("Permissions", "Permission Denied: Izin ditolak")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -47,28 +35,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initListener()
-        requestPermissions()
-        checkBatteryOptimization()
-    }
-
-    @SuppressLint("BatteryLife")
-    private fun checkBatteryOptimization() {
-        val powerManager = getSystemService(POWER_SERVICE) as PowerManager
-        val packageName = packageName
-        if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
-            AlertDialog.Builder(this)
-                .setTitle("Pengaturan Battery Optimization")
-                .setMessage("Untuk memastikan notifikasi berjalan dengan baik, mohon nonaktifkan battery optimization untuk aplikasi ini.")
-                .setPositiveButton("Buka Pengaturan") { _, _ ->
-                    val intent = Intent().apply {
-                        action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                        data = Uri.parse("package:$packageName")
-                    }
-                    startActivity(intent)
-                }
-                .setNegativeButton("Nanti", null)
-                .show()
-        }
     }
 
     private fun initListener(){
@@ -90,18 +56,6 @@ class LoginActivity : AppCompatActivity() {
 
             binding.tbPassword.setSelection(binding.tbPassword.text.length)
         }
-    }
-
-    private fun requestPermissions(){
-        val permissions = mutableListOf(
-            Manifest.permission.RECEIVE_BOOT_COMPLETED,
-            Manifest.permission.WAKE_LOCK
-        )
-
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-        if (VERSION.SDK_INT >= VERSION_CODES.S) permissions.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
-
-        requestPermissionLauncher.launch(permissions.toTypedArray())
     }
 
     private fun loginProcess(){

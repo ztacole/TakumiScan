@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.presentation.auth.LoginActivity
 import com.zetta.takumiscan.presentation.auth.RegisterActivity
+import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.presentation.onboarding.OnBoardingActivity
 import com.zetta.takumiscan.util.CacheController
 
@@ -22,9 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             var intent = Intent(this, OnBoardingActivity::class.java)
             if (cacheController.isFirstTime()) intent = Intent(this, RegisterActivity::class.java)
-            if (cacheController.isAlreadyRegister()) intent = Intent(this, LoginActivity::class.java)
-
-//            intent = Intent(this, MainActivity::class.java)
+            if (cacheController.isAlreadyRegister()) intent = Intent(this, MainActivity::class.java)
 
             startActivity(intent)
             finish()

@@ -69,7 +69,7 @@ class NotesDetailActivity : AppCompatActivity() {
                     editNote()
                     note = dbHelper.getNoteByID(id)
                     Toast.makeText(this, "Catatan berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                    setMode()
+                    onBackPressedDispatcher.onBackPressed()
                 }
                 "add" -> {
                     if (binding.tbNote.text.isEmpty()){
@@ -80,7 +80,7 @@ class NotesDetailActivity : AppCompatActivity() {
                     addNote()
                     note = dbHelper.getNoteByID(id)
                     Toast.makeText(this, "Catatan berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-                    setMode()
+                    onBackPressedDispatcher.onBackPressed()
                 }
             }
         }
@@ -136,10 +136,6 @@ class NotesDetailActivity : AppCompatActivity() {
         var date: String? = binding.lblDate.text.toString()
         if (binding.tbTitle.text.isEmpty()) title = null
         if (binding.lblDate.text.isEmpty()) date = null
-        if (binding.tbNote.text.isEmpty()){
-            Toast.makeText(this, "Catatan harus diisi", Toast.LENGTH_SHORT).show()
-            return
-        }
 
         date?.let {
             NotificationHelper.cancelNotification(this, id)
@@ -157,7 +153,6 @@ class NotesDetailActivity : AppCompatActivity() {
         var date: String? = binding.lblDate.text.toString()
         if (binding.tbTitle.text.isEmpty()) title = null
         if (binding.lblDate.text.isEmpty()) date = null
-
 
         id = dbHelper.addNote(Note(0, title, binding.tbNote.text.toString(), date)).toInt()
         date?.let { NotificationHelper.registerNotification(this, it, id) }

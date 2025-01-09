@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.graphics.scaleMatrix
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.presentation.auth.LoginActivity
+import com.zetta.takumiscan.presentation.main.MainActivity
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -75,7 +76,7 @@ object NotificationHelper {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val notificationIntent = Intent(context, LoginActivity::class.java).apply {
+        val notificationIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)

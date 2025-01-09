@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:layout_marginHorizontal="16dp"
     android:background="@color/white"
     android:layout_marginTop="8dp"
     android:layout_height="wrap_content">
@@ -12,15 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="← Hapus"
+        android:text="History"
+        android:textStyle="bold"
         android:textAlignment="textStart" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Edit →"
-        android:textAlignment="textEnd" />
 
 </LinearLayout>

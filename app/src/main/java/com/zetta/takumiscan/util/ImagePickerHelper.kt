@@ -1,5 +1,6 @@
 package com.zetta.takumiscan.util
 
+import android.Manifest
 import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.widget.Toast
@@ -27,6 +28,15 @@ class ImagePickerHelper(private val activity: AppCompatActivity, private val onS
             )
             onImageSelected(bitmap)
         }
+    }
+
+    fun requestCameraPermission(onResult: (Boolean) -> Unit){
+        val requestPermissionLauncher = activity.registerForActivityResult(
+            ActivityResultContracts.RequestPermission())
+        {isGranted:Boolean ->
+            onResult(isGranted)
+        }
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
     fun showImagePickerDialog(isCameraGranted: Boolean) {

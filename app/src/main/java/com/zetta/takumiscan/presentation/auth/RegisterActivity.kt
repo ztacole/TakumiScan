@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.TypedValue
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityRegisterBinding
 import com.zetta.takumiscan.model.DataUser
+import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.util.CacheController
 import com.zetta.takumiscan.util.ImagePickerHelper
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
@@ -112,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         )
 
-        requestCameraPermission()
+        imagePickerHelper.requestCameraPermission { isCameraGranted = it }
 
         initJurusanDropdown()
         initListener()
@@ -187,10 +190,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 dbHelper.registerUser(data)
                 CacheController(this).setStatus("Registered")
-                Intent(this, LoginActivity::class.java).also {
-                    startActivity(it)
-                    finish()
-                }
+                animateOnExit()
             },
             negativeButtonText = "Tidak",
             onNegativeButtonClick = DialogInterface.OnClickListener { dialog, _ ->
@@ -203,12 +203,50 @@ class RegisterActivity : AppCompatActivity() {
         imagePickerHelper.showImagePickerDialog(isCameraGranted)
     }
 
-    private fun requestCameraPermission(){
-        val requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission())
-        {isGranted:Boolean ->
-            isCameraGranted = isGranted
+    private fun animateOnExit(){
+        binding.frameAnimation.animate().apply {
+            scaleY(100f)
+            duration = 300
+            withEndAction {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.dark(resources.getColor(R.color.navy, theme))
+                )
+                binding.lblMessage.animate().apply {
+                    alpha(1f)
+                    duration = 300
+                    withEndAction {
+                        val translate = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
+
+                        binding.iconSuccess.animate().apply {
+                            scaleY(1.15f)
+                            scaleX(1.15f)
+                            translationY(-translate)
+                            duration = 500
+                            withEndAction {
+                                binding.iconSuccess.animate().apply {
+                                    scaleY(1f)
+                                    scaleX(1f)
+                                    translationY(translate)
+                                    duration = 300
+                                    withEndAction {
+                                        binding.iconSuccess.animate().apply {
+                                            scaleY(1f)
+                                            duration = 600
+                                            withEndAction {
+                                                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                                binding.iconSuccess.animate().alpha(0f).setDuration(200)
+                                                binding.lblMessage.animate().alpha(0f).setDuration(200)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 }

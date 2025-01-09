@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -86,29 +87,19 @@ class NotesActivity : AppCompatActivity() {
                 return false
             }
 
-            override fun getSwipeDirs(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ): Int {
-                return if (viewHolder.adapterPosition != 0){
-                    super.getSwipeDirs(recyclerView, viewHolder)
-                }
-                else ItemTouchHelper.ACTION_STATE_IDLE
-            }
-
             override fun onSwiped(
                 viewHolder: RecyclerView.ViewHolder,
                 direction: Int
             ) {
                 val position = viewHolder.adapterPosition
-                val note = listNotes[position - 1]
+                val note = listNotes[position]
                 if (direction == ItemTouchHelper.LEFT){
-                    listNotes.removeAt(position - 1)
+                    listNotes.removeAt(position)
                     dbHelper.deleteNote(note.id)
                     adapter.notifyItemRemoved(position)
                     Snackbar.make(binding.root, "Catatan  dihapus", Snackbar.LENGTH_LONG)
                         .setAction("Pulihkan"){
-                            listNotes.add(position - 1, note)
+                            listNotes.add(position, note)
                             adapter.notifyItemInserted(position)
                             dbHelper.addNote(note)
                         }.show()
