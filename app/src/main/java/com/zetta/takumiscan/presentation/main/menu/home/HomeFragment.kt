@@ -55,21 +55,27 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     private lateinit var userLocation: Location
     private var distance: Float = 0f
 
-    private val requestPermissionLauncher = registerForActivityResult(
+    private val requestLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         val locationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+
+        if (locationGranted) {
+            startLocationUpdates()
+        }
+        else Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
+    }
+
+    private val requestPermissionNotificationLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
         val bootGranted = permissions[Manifest.permission.RECEIVE_BOOT_COMPLETED] ?: false
         var notificationGranted = true
 
         if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) notificationGranted = permissions[Manifest.permission.POST_NOTIFICATIONS] ?: false
 
-        if (bootGranted && notificationGranted) Log.i("Permissions", "Permission Denied: Izin diterima")
+        if (bootGranted && notificationGranted) Log.i("Permissions", "Permission Granted: Izin diterima")
         else Log.i("Permissions", "Permission Denied: Izin ditolak")
-
-        if (locationGranted) {
-            startLocationUpdates()
-        }
     }
 
     private lateinit var main: MainActivity
@@ -91,7 +97,8 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         setup()
 
         startClock()
-        requestPermission()
+        requestLocationPermission()
+        requestNotificationPermission()
         setNotesData()
 
         binding.btnSetLocation.setOnClickListener{
@@ -99,7 +106,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             main.binding.btnQR.setOnClickListener {
                 Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
             }
-            requestPermission()
+            requestLocationPermission()
         }
 
         if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
@@ -158,19 +165,26 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         setNotesData()
     }
 
-    private fun requestPermission() {
+    private fun requestLocationPermission() {
+        val permissions = mutableListOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+        requestLocationPermissionLauncher.launch(permissions.toTypedArray())
+    }
+
+    private fun requestNotificationPermission() {
         val permissions = mutableListOf(
             Manifest.permission.RECEIVE_BOOT_COMPLETED,
             Manifest.permission.WAKE_LOCK,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
         )
 
         if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) permissions.add(Manifest.permission.POST_NOTIFICATIONS)
         if (VERSION.SDK_INT >= VERSION_CODES.S) permissions.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
-        if (VERSION.SDK_INT >= VERSION_CODES.Q) permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
 
-        requestPermissionLauncher.launch(permissions.toTypedArray())
+        requestPermissionNotificationLauncher.launch(permissions.toTypedArray())
     }
 
     private fun startClock() {
@@ -205,7 +219,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
             return
         }
 
