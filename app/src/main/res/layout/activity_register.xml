@@ -179,7 +179,9 @@
                 android:inputType="number"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:drawableTint="@color/gray"
                 android:layout_marginEnd="16dp"
+                android:maxLines="1"
                 android:hint="NISN"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/tb_regist_border"
@@ -188,101 +190,107 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView20"/>
 
             <!-- Nama Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputNama"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/tbNama"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:background="@drawable/tb_regist_border"
+                android:drawableStart="@drawable/baseline_person_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/gray"
                 android:hint="Nama"
+                android:maxLines="1"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tbNISN">
-
-                <EditText
-                    android:id="@+id/tbNama"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_person_24"
-                    android:drawablePadding="8dp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@+id/tbNISN" />
 
             <!-- Kelas Input -->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputJurusan"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
+            <Spinner
+                android:id="@+id/cbJurusan"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
-                android:hint="Jurusan"
+                android:background="@drawable/tb_regist_border"
+                android:paddingVertical="8dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputNama">
+                app:layout_constraintTop_toBottomOf="@+id/tbNama"
+                tools:listitem="@layout/textview_dropdown" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/tbJurusan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_school_24"
-                    android:drawablePadding="8dp"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/imageView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:tint="@color/gray"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cbJurusan"
+                app:layout_constraintStart_toStartOf="@+id/cbJurusan"
+                app:layout_constraintTop_toTopOf="@+id/cbJurusan"
+                app:srcCompat="@drawable/baseline_school_24" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputKelas"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
+            <Spinner
+                android:id="@+id/cbKelas"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                tools:listitem="@layout/textview_dropdown"
                 android:layout_marginEnd="16dp"
-                android:hint="Kelas"
+                android:background="@drawable/tb_regist_border"
+                android:paddingVertical="8dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputJurusan">
+                app:layout_constraintTop_toBottomOf="@+id/cbJurusan" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/tbKelas"
-                    android:layout_width="match_parent"
-                    android:enabled="false"
-                    android:inputType="none"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_sensor_door_24"
-                    android:drawablePadding="8dp" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:tint="@color/gray"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cbKelas"
+                app:layout_constraintStart_toStartOf="@+id/cbKelas"
+                app:layout_constraintTop_toTopOf="@+id/cbKelas"
+                app:srcCompat="@drawable/baseline_sensor_door_24" />
 
             <!-- Jurusan Input -->
 
             <!-- Password Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+
+            <!-- Eye Icon for Password -->
+            <EditText
+                android:id="@+id/tbPassword"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:drawablePadding="8dp"
                 android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingEnd="48dp"
+                android:background="@drawable/tb_regist_border"
+                android:paddingStart="16dp"
+                android:drawableTint="@color/gray"
+                android:paddingVertical="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputKelas">
+                app:layout_constraintTop_toBottomOf="@+id/cbKelas" />
 
-                <EditText
-                    android:id="@+id/tbPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_lock_24"
-                    android:drawablePadding="8dp"
-                    android:paddingEnd="48dp"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Eye Icon for Password -->
             <ImageView
                 android:id="@+id/icPassword"
                 android:layout_width="24dp"
@@ -290,9 +298,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/show_password"
-                app:layout_constraintBottom_toBottomOf="@id/inputPassword"
-                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-                app:layout_constraintTop_toTopOf="@id/inputPassword" />
+                app:layout_constraintBottom_toBottomOf="@id/tbPassword"
+                app:layout_constraintEnd_toEndOf="@+id/tbPassword"
+                app:layout_constraintTop_toTopOf="@id/tbPassword" />
 
             <!-- Register Button -->
             <Button
@@ -303,12 +311,12 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="48dp"
-                android:background="@drawable/btn_gradient"
+                android:background="@drawable/btn_border"
                 android:text="Register"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/tbPassword" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

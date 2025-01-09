@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.TypedValue
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -23,6 +24,7 @@ import com.zetta.takumiscan.util.ImagePickerHelper
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 
 private val listJurusan = listOf(
+    "Jurusan",
     "Rekayasa Perangkat Lunak",
     "Perhotelan",
     "Kuliner",
@@ -32,6 +34,7 @@ private val listJurusan = listOf(
 
 private val listKelas = listOf(
     listOf(
+        "Kelas",
         "X RPL 1",
         "X RPL 2",
         "XI RPL 1",
@@ -40,6 +43,7 @@ private val listKelas = listOf(
         "XII RPL 2",
     ),
     listOf(
+        "Kelas",
         "X PH 1",
         "X PH 2",
         "X PH 3",
@@ -51,6 +55,7 @@ private val listKelas = listOf(
         "XII PH 3",
     ),
     listOf(
+        "Kelas",
         "X KUL 1",
         "X KUL 2",
         "X KUL 3",
@@ -62,11 +67,13 @@ private val listKelas = listOf(
         "XII KUL 3",
     ),
     listOf(
+        "Kelas",
         "X ULW",
         "XI ULW",
         "XII ULW",
     ),
     listOf(
+        "Kelas",
         "X TBS 1",
         "X TBS 2",
         "X TBS 3",
@@ -89,6 +96,9 @@ class RegisterActivity : AppCompatActivity() {
     private var isCameraGranted = false
 
     private var isPasswordVisible = false
+
+    private var jurusan = "Jurusan"
+    private var kelas = "Kelas"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,12 +133,22 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun initJurusanDropdown() {
         val adapter = ArrayAdapter(this, R.layout.textview_dropdown, listJurusan)
-        binding.tbJurusan.setAdapter(adapter)
+        binding.cbJurusan.adapter = adapter
+        binding.cbKelas.adapter = ArrayAdapter(this, R.layout.textview_dropdown, listOf("Kelas"))
     }
 
     private fun initKelasDropdown(index: Int){
-        val adapter = ArrayAdapter(this, R.layout.textview_dropdown, listKelas[index])
-        binding.tbKelas.setAdapter(adapter)
+        val kelas = listKelas[index]
+        val adapter = ArrayAdapter(this, R.layout.textview_dropdown, kelas)
+        binding.cbKelas.adapter = adapter
+
+        binding.cbKelas.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                this@RegisterActivity.kelas = kelas[position]
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {  }
+        }
     }
 
     private fun initListener(){
@@ -144,10 +164,22 @@ class RegisterActivity : AppCompatActivity() {
             selectImage()
         }
 
-        binding.tbJurusan.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            binding.tbKelas.isEnabled = true
+        binding.cbJurusan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position != 0) binding.cbKelas.isClickable = true
+                else {
+                    binding.cbKelas.isClickable = false
+                    binding.cbKelas.adapter = ArrayAdapter(this@RegisterActivity, R.layout.textview_dropdown, listOf("Kelas"))
+                    kelas = "Kelas"
+                    return
+                }
 
-            initKelasDropdown(position)
+                jurusan = listJurusan[position]
+
+                initKelasDropdown(position - 1)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {  }
         }
 
         binding.icPassword.setOnClickListener {
@@ -167,7 +199,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerProcess() {
-        if (binding.tbNISN.text.isEmpty() || binding.tbNama.text.isEmpty() || binding.tbKelas.text.isEmpty() || binding.tbJurusan.text.isEmpty() || binding.tbPassword.text.isEmpty()){
+        if (binding.tbNISN.text.isEmpty() || binding.tbNama.text.isEmpty() || kelas == "Kelas" || jurusan == "Jurusan" || binding.tbPassword.text.isEmpty()){
             Toast.makeText(this, "Semua data harus terisi!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -183,8 +215,8 @@ class RegisterActivity : AppCompatActivity() {
                 val data = DataUser(
                     nisn = binding.tbNISN.text.toString(),
                     nama = binding.tbNama.text.toString(),
-                    kelas = binding.tbKelas.text.toString(),
-                    jurusan = binding.tbJurusan.text.toString(),
+                    jurusan = jurusan,
+                    kelas = kelas,
                     password = binding.tbPassword.text.toString(),
                     photo = photo!!
                 )

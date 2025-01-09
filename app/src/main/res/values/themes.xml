@@ -15,7 +15,7 @@
     <style name="Theme.TakumiScan" parent="Base.Theme.TakumiScan" />
 
     <style name="btnGradient">
-        <item name="android:background">@drawable/btn_gradient</item>
+        <item name="android:background">@drawable/btn_border</item>
         <item name="android:backgroundTint">@null</item>
     </style>
 </resources>
