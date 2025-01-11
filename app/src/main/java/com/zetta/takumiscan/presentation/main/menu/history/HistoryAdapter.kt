@@ -66,7 +66,7 @@ class HistoryAdapter(private val histories: List<History>): RecyclerView.Adapter
             view.binding.lblDate.text = dateTime
             view.binding.lblStatus.text = history.status
             when (history.mood) {
-                "Senang" -> view.binding.iconMood.setImageResource(R.drawable.mood_smile)
+                "Senang" -> view.binding.iconMood.setImageResource(R.drawable.mood_happy)
                 "Datar" -> view.binding.iconMood.setImageResource(R.drawable.mood_flat)
                 "Sedih" -> view.binding.iconMood.setImageResource(R.drawable.mood_sad)
             }
