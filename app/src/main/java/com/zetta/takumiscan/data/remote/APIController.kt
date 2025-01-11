@@ -22,7 +22,7 @@ class APIController(url: String, method: String) {
         conn.doOutput = true
     }
 
-    fun execute(postData: Map<String, Any>? = null, onResponse: (String)-> Unit) {
+    fun execute(postData: Map<String, Any>? = null, onResponse: (String, Int)-> Unit) {
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -37,11 +37,11 @@ class APIController(url: String, method: String) {
                 }
                 val response = conn.inputStream.bufferedReader().use { it.readText() }
                 withContext(Dispatchers.Main) {
-                    onResponse(response)
+                    onResponse(response, conn.responseCode)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    onResponse("Error: ${e.message}")
+                    onResponse("Error: ${e.message}", conn.responseCode)
                 }
             }
         }
