@@ -43,8 +43,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="24dp"
-                app:srcCompat="@drawable/mood_flat"
-                app:tint="@color/navy" />
+                app:srcCompat="@drawable/mood_flat" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -65,8 +64,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="24dp"
-                app:srcCompat="@drawable/mood_happy"
-                app:tint="@color/navy" />
+                app:srcCompat="@drawable/mood_happy"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -87,8 +85,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="24dp"
-                app:srcCompat="@drawable/mood_flat"
-                app:tint="@color/navy" />
+                app:srcCompat="@drawable/mood_sad" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
