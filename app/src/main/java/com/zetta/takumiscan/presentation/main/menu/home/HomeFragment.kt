@@ -277,7 +277,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         binding.scrollDenah.visibility = View.VISIBLE
         main.binding.btnQR.setOnClickListener {
             Intent(main, ScanActivity::class.java).also {
-                it.putExtra("lokasi", "${userLocation.latitude}, ${userLocation.longitude}")
+                it.putExtra("lokasi", "SMKN 24 Jakarta--")
                 startActivity(it)
             }
         }
