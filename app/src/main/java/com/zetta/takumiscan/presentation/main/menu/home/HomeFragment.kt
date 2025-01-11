@@ -66,18 +66,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         else Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
     }
 
-    private val requestPermissionNotificationLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val bootGranted = permissions[Manifest.permission.RECEIVE_BOOT_COMPLETED] ?: false
-        var notificationGranted = true
-
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) notificationGranted = permissions[Manifest.permission.POST_NOTIFICATIONS] ?: false
-
-        if (bootGranted && notificationGranted) Log.i("Permissions", "Permission Granted: Izin diterima")
-        else Log.i("Permissions", "Permission Denied: Izin ditolak")
-    }
-
     private lateinit var main: MainActivity
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelper: DBHelper
@@ -98,7 +86,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
 
         startClock()
         requestLocationPermission()
-        requestNotificationPermission()
         setNotesData()
 
         binding.btnSetLocation.setOnClickListener{
@@ -173,18 +160,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         if (VERSION.SDK_INT >= VERSION_CODES.Q) permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
 
         requestLocationPermissionLauncher.launch(permissions.toTypedArray())
-    }
-
-    private fun requestNotificationPermission() {
-        val permissions = mutableListOf(
-            Manifest.permission.RECEIVE_BOOT_COMPLETED,
-            Manifest.permission.WAKE_LOCK,
-        )
-
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-        if (VERSION.SDK_INT >= VERSION_CODES.S) permissions.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
-
-        requestPermissionNotificationLauncher.launch(permissions.toTypedArray())
     }
 
     private fun startClock() {
