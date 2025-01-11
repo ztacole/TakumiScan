@@ -229,17 +229,20 @@ class ScanActivity : AppCompatActivity() {
         dialog.setOnShowListener{
             moodView.cardSad.setOnClickListener {
                 mood = "Sedih"
+                addToHistory()
                 showDialogStory()
                 dialog.dismiss()
             }
             moodView.cardFlat.setOnClickListener {
                 mood = "Datar"
-                showDialogStory()
+                addToHistory()
+                animateOnExit()
                 dialog.dismiss()
             }
             moodView.cardSmile.setOnClickListener {
                 mood = "Senang"
-                showDialogStory()
+                addToHistory()
+                animateOnExit()
                 dialog.dismiss()
             }
         }
@@ -258,21 +261,26 @@ class ScanActivity : AppCompatActivity() {
 
         dialog.setOnShowListener{
             storyView.btnKirim.setOnClickListener {
-                val data = History(
-                    id = 0,
-                    status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu" else "Terlambat",
-                    photo = photo!!,
-                    mood = mood!!,
-                    dateTime = Calendar.getInstance().time.toString()
-                )
+                //Kirim ke BK
 
-                dbHelper.addHistory(data)
                 dialog.dismiss()
                 animateOnExit()
             }
         }
 
         dialog.show()
+    }
+
+    private fun addToHistory(){
+        val data = History(
+            id = 0,
+            status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu" else "Terlambat",
+            photo = photo!!,
+            mood = mood!!,
+            dateTime = Calendar.getInstance().time.toString()
+        )
+
+        dbHelper.addHistory(data)
     }
 
     private fun animateOnExit(){
