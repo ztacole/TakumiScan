@@ -1,16 +1,13 @@
 package com.zetta.takumiscan.presentation.main.menu.scan
 
 import android.Manifest
-import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.content.DialogInterface
-import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
 import android.util.TypedValue
-import android.view.animation.Interpolator
 import android.widget.Toast
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -38,11 +35,11 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
+import com.zetta.takumiscan.data.remote.APIController
 import com.zetta.takumiscan.databinding.DialogMoodBinding
 import com.zetta.takumiscan.databinding.DialogStoryBinding
 import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.model.History
-import com.zetta.takumiscan.presentation.main.MainActivity
 import com.zetta.takumiscan.util.ImagePickerHelper
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 import java.net.URL
@@ -62,6 +59,7 @@ class ScanActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DBHelper
     private lateinit var dataUser: DataUser
+    private var userLocation: String = "Diluar SMKN 24 Jakarta"
 
     private var mood: String? = null
     private var photo: ByteArray? = null
@@ -77,6 +75,7 @@ class ScanActivity : AppCompatActivity() {
         binding = ActivityScanBinding.inflate(layoutInflater)
         dbHelper = DBHelper(this)
         dataUser = dbHelper.getDataUser()
+        userLocation = intent.getStringExtra("lokasi") ?: "Diluar SMKN 24 Jakarta"
         imagePickerHelper = ImagePickerHelper(
             activity = this,
             onSelected = { _, byteArray ->
@@ -229,26 +228,92 @@ class ScanActivity : AppCompatActivity() {
         dialog.setOnShowListener{
             moodView.cardSad.setOnClickListener {
                 mood = "Sedih"
-                addToHistory()
-                showDialogStory()
                 dialog.dismiss()
+                showDialogStory()
             }
             moodView.cardFlat.setOnClickListener {
                 mood = "Datar"
-                addToHistory()
-                animateOnExit()
-                dialog.dismiss()
+
+                val status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu--" else "Terlambat"
+
+                APIController(
+                    url = "absensi-takumi.php",
+                    method = "POST"
+                ).execute(
+                    postData = mapOf(
+                        "nisn" to dataUser.nisn,
+                        "nama" to dataUser.nama,
+                        "jurusan" to dataUser.jurusan,
+                        "kelas" to dataUser.kelas,
+                        "lokasi" to userLocation,
+                        "mood" to mood!!,
+                        "status" to status
+                    )
+                ) { message, code ->
+                    dialog.dismiss()
+                    Log.d("Absensi", "showDialogStory: $message, $code")
+                    if (code in 200 until 300){
+                        addToHistory()
+                        animateOnExit()
+                    }
+                    else {
+                        showDialog(
+                            title = "Absen Gagal!",
+                            message = "Pastikan perangkatmu terhubung dengan internet",
+                            cancellable = false,
+                            positiveButtonText = "OK",
+                            onPositiveButtonClick = { dialogWarning, _ ->
+                                dialogWarning.dismiss()
+                                onBackPressedDispatcher.onBackPressed()
+                            }
+                        )
+                    }
+                }
             }
             moodView.cardSmile.setOnClickListener {
                 mood = "Senang"
-                addToHistory()
-                animateOnExit()
-                dialog.dismiss()
+
+                val status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu--" else "Terlambat"
+
+                APIController(
+                    url = "absensi-takumi.php",
+                    method = "POST"
+                ).execute(
+                    postData = mapOf(
+                        "nisn" to dataUser.nisn,
+                        "nama" to dataUser.nama,
+                        "jurusan" to dataUser.jurusan,
+                        "kelas" to dataUser.kelas,
+                        "lokasi" to userLocation,
+                        "mood" to mood!!,
+                        "status" to status
+                    )
+                ) { message, code ->
+                    dialog.dismiss()
+                    Log.d("Absensi", "showDialogStory: $message, $code")
+                    if (code in 200 until 300){
+                        addToHistory()
+                        animateOnExit()
+                    }
+                    else {
+                        showDialog(
+                            title = "Absen Gagal!",
+                            message = "Pastikan perangkatmu terhubung dengan internet",
+                            cancellable = false,
+                            positiveButtonText = "OK",
+                            onPositiveButtonClick = { dialogWarning, _ ->
+                                dialogWarning.dismiss()
+                                onBackPressedDispatcher.onBackPressed()
+                            }
+                        )
+                    }
+                }
             }
         }
 
         dialog.show()
     }
+
 
     private fun showDialogStory(){
         val storyView = DialogStoryBinding.inflate(layoutInflater)
@@ -261,10 +326,42 @@ class ScanActivity : AppCompatActivity() {
 
         dialog.setOnShowListener{
             storyView.btnKirim.setOnClickListener {
-                //Kirim ke BK
+                val catatan = storyView.tbStory.text.toString()
 
-                dialog.dismiss()
-                animateOnExit()
+                val status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu--" else "Terlambat"
+                APIController(
+                    url = "absensi-takumi.php",
+                    method = "POST"
+                ).execute(
+                    postData = mapOf(
+                        "nisn" to dataUser.nisn,
+                        "nama" to dataUser.nama,
+                        "jurusan" to dataUser.jurusan,
+                        "kelas" to dataUser.kelas,
+                        "lokasi" to userLocation,
+                        "mood" to mood!!,
+                        "status" to status
+                    )
+                ) { message, code ->
+                    dialog.dismiss()
+                    Log.d("Absensi", "showDialogStory: $message, $code")
+                    if (code in 200 until 300){
+                        addToHistory()
+                        animateOnExit()
+                    }
+                    else {
+                        showDialog(
+                            title = "Absen Gagal!",
+                            message = "Pastikan perangkatmu terhubung dengan internet",
+                            cancellable = false,
+                            positiveButtonText = "OK",
+                            onPositiveButtonClick = { dialogWarning, _ ->
+                                dialogWarning.dismiss()
+                                onBackPressedDispatcher.onBackPressed()
+                            }
+                        )
+                    }
+                }
             }
         }
 
