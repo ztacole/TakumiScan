@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zetta.takumiscan.R
 import com.zetta.takumiscan.databinding.FragmentThirdPageBinding
 import com.zetta.takumiscan.presentation.auth.RegisterActivity
-import com.zetta.takumiscan.util.CacheController
+import com.zetta.takumiscan.data.local.CacheController
 
 class ThirdPageFragment : Fragment() {
     private lateinit var binding: FragmentThirdPageBinding

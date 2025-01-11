@@ -1,24 +1,17 @@
 package com.zetta.takumiscan.presentation.onboarding
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.transition.Visibility
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.databinding.ActivityOnBoardingBinding
-import com.zetta.takumiscan.presentation.auth.RegisterActivity
 import com.zetta.takumiscan.presentation.onboarding.fragment.FirstPageFragment
 import com.zetta.takumiscan.presentation.onboarding.fragment.SecondPageFragment
 import com.zetta.takumiscan.presentation.onboarding.fragment.ThirdPageFragment
-import com.zetta.takumiscan.util.CacheController
 
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnBoardingBinding

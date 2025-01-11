@@ -1,6 +1,5 @@
 package com.zetta.takumiscan.presentation.auth
 
-import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -12,14 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityRegisterBinding
 import com.zetta.takumiscan.model.DataUser
 import com.zetta.takumiscan.presentation.main.MainActivity
-import com.zetta.takumiscan.util.CacheController
+import com.zetta.takumiscan.data.local.CacheController
 import com.zetta.takumiscan.util.ImagePickerHelper
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 

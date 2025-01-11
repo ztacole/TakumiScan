@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,7 @@ import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.ActivityNotesBinding
 import com.zetta.takumiscan.model.Note
 import com.zetta.takumiscan.presentation.main.menu.home.notes.adapter.NotesAdapter
-import com.zetta.takumiscan.util.CacheController
+import com.zetta.takumiscan.data.local.CacheController
 import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 
 class NotesActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.zetta.takumiscan.util
+package com.zetta.takumiscan.data.local
 
 import android.content.Context
 
