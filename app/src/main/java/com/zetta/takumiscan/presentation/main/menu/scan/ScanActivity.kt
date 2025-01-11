@@ -232,7 +232,7 @@ class ScanActivity : AppCompatActivity() {
                 showDialogStory()
             }
             moodView.cardFlat.setOnClickListener {
-                mood = "Datar"
+                mood = "Biasa saja"
 
                 val status = if (Calendar.getInstance().time.before(BATAS_WAKTU_HADIR.time)) "Tepat Waktu--" else "Terlambat"
 
