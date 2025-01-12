@@ -109,18 +109,22 @@ class NotesActivity : AppCompatActivity() {
         val powerManager = getSystemService(POWER_SERVICE) as PowerManager
         val packageName = packageName
         if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
-            AlertDialog.Builder(this)
-                .setTitle("Pengaturan Battery Optimization")
-                .setMessage("Untuk memastikan notifikasi berjalan dengan baik, mohon nonaktifkan battery optimization untuk aplikasi ini.")
-                .setPositiveButton("Buka Pengaturan") { _, _ ->
+            showDialog(
+                title = "Pengaturan Battery Optimization",
+                message = "Untuk memastikan notifikasi berjalan dengan baik, mohon nonaktifkan battery optimization untuk aplikasi ini",
+                positiveButtonText = "Buka Pengaturan",
+                onPositiveButtonClick = { _, _ ->
                     val intent = Intent().apply {
                         action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
                         data = Uri.parse("package:$packageName")
                     }
                     startActivity(intent)
+                },
+                negativeButtonText = "Nanti",
+                onNegativeButtonClick = { dialog, _ ->
+                    dialog.dismiss()
                 }
-                .setNegativeButton("Nanti", null)
-                .show()
+            )
         }
     }
 
