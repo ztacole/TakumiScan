@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:text="Ayo Mulai!"
+        android:textStyle="bold"
         android:textColor="@color/light_navy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
