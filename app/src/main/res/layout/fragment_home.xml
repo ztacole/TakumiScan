@@ -28,7 +28,7 @@
             android:text="00:00"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="64sp"
+            android:textSize="54sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/lblSecond"
@@ -44,7 +44,7 @@
             android:layout_marginBottom="12dp"
             android:text=":00"
             android:textColor="@color/white"
-            android:textSize="42sp"
+            android:textSize="32sp"
             app:layout_constraintBottom_toBottomOf="@+id/lblHourMinute"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -54,12 +54,15 @@
             android:id="@+id/lblHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Halo User!"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/lblKoneksi"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/lblKoneksi"
+            app:layout_constraintStart_toStartOf="@+id/lblKoneksi" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView4"
@@ -110,6 +113,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="Sedang melacak lokasi.."
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
@@ -131,8 +136,8 @@
 
                         <ImageButton
                             android:id="@+id/btnCheckConnection"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:adjustViewBounds="true"
                             android:background="@drawable/btn_border"
                             android:padding="4dp"
@@ -162,8 +167,8 @@
 
                         <ImageButton
                             android:id="@+id/btnSetLocation"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:background="@drawable/btn_border"
                             android:padding="4dp"
                             android:src="@drawable/baseline_location_searching_24"
@@ -213,11 +218,13 @@
             android:id="@+id/lblKoneksi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="Menghubungkan.."
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/cardView4"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
