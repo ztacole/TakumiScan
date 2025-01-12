@@ -44,10 +44,10 @@ class HistoryAdapter(private val histories: List<History>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
 
-        if (position == histories.size) layoutParams.bottomMargin = holder.itemView.context.dpToPx(96)
+        if (position == histories.size) layoutParams.bottomMargin = holder.itemView.context.dpToPx(80)
         else layoutParams.bottomMargin = holder.itemView.context.dpToPx(0)
 
-        if (position > 1) layoutParams.topMargin = holder.itemView.context.dpToPx(8)
+        if (position > 0) layoutParams.topMargin = holder.itemView.context.dpToPx(16)
 
         if (position > 0) {
             val view = (holder as ItemViewHolder)
