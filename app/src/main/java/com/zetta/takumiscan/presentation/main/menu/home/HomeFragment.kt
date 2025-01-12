@@ -88,16 +88,12 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         requestLocationPermission()
         setNotesData()
 
-        binding.btnSetLocation.setOnClickListener{
-            binding.lblLocation.text = "Sedang melacak lokasi.."
-            main.binding.btnQR.setOnClickListener {
-                Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
-            }
-            requestLocationPermission()
-        }
+        initListener()
 
-        if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
+        return binding.root
+    }
 
+    private fun initListener(){
         binding.tbAddNote.setOnClickListener {
             Intent(requireContext(), NotesDetailActivity::class.java).also {
                 it.putExtra("mode", "add")
@@ -111,7 +107,13 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             }
         }
 
-        return binding.root
+        binding.btnSetLocation.setOnClickListener{
+            binding.lblLocation.text = "Sedang melacak lokasi.."
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Mohon tunggu, Sedang melacak lokasi..", Toast.LENGTH_SHORT).show()
+            }
+            requestLocationPermission()
+        }
     }
 
     private fun setup(){
@@ -139,6 +141,11 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
                 }
             }
         }
+
+        if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
+
+        val dataUser = dbHelper.getDataUser()
+        binding.lblHello.text = "Halo ${dataUser.nama}!"
     }
 
     override fun onStop() {
