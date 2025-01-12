@@ -180,16 +180,13 @@ class ScanActivity : AppCompatActivity() {
     private fun handleBarcode(barcode: Barcode){
         val url = barcode.url?.url?:barcode.displayValue
         if (url != null){
-            val customUrl = URL("https://backend24.com/hello.php?nama=${dataUser.nama}&lokasi=${intent.getStringExtra("lokasi")}")
-            Toast.makeText(this, "Scan berhasil", Toast.LENGTH_SHORT).show()
             Log.d("QR URL", "handleBarcode: $url")
-            Log.d("Custom URL", "handleBarcode: $customUrl")
 
             stopCamera()
 
             showDialog(
-                title = "Penting!",
-                message = "Silahkan absen wajah kamu",
+                title = "Scan Berhasil",
+                message = "Silahkan absen wajah kamu!",
                 positiveButtonText = "Ok",
                 onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
                     dialog.dismiss()
@@ -250,7 +247,14 @@ class ScanActivity : AppCompatActivity() {
                 addToHistory()
                 animateOnExit()
             } else {
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                showDialog(
+                    title = "Terjadi Kesalahan",
+                    message = message,
+                    positiveButtonText = "Ok",
+                    onPositiveButtonClick = { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                )
                 finish()
             }
         }

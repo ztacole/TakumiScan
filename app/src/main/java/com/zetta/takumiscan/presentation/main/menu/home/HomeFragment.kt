@@ -40,6 +40,7 @@ import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LATITUDE
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LONGITUDE
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_RADIUS
 import com.zetta.takumiscan.util.core.CoreFunction.isInternetAvailable
+import com.zetta.takumiscan.util.core.CoreFunction.showDialog
 import com.zetta.takumiscan.util.geofence.GeofenceHelper
 import com.zetta.takumiscan.util.geofence.OnGeofenceTriggeredListener
 import java.text.SimpleDateFormat
@@ -266,7 +267,14 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
 
         if (isAlreadyPresence()) {
             main.binding.btnQR.setOnClickListener {
-                Toast.makeText(main, "Kamu sudah absen", Toast.LENGTH_SHORT).show()
+                requireContext().showDialog(
+                    title = "Kamu Sudah Absen",
+                    message = "Kamu bisa absen lagi esok hari, semangat menjalani hari ini ya!",
+                    positiveButtonText = "Ok",
+                    onPositiveButtonClick = { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                )
             }
             binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
         }
@@ -295,7 +303,14 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         else {
             binding.lblKoneksi.text = "Tidak ada koneksi internet"
             main.binding.btnQR.setOnClickListener {
-                Toast.makeText(main, "Tidak ada koneksi internet, coba lagi nanti", Toast.LENGTH_SHORT).show()
+                requireContext().showDialog(
+                    title = "Koneksi Gagal",
+                    message = "Tidak ada koneksi internet, coba lagi nanti.",
+                    positiveButtonText = "Ok",
+                    onPositiveButtonClick = { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                )
             }
         }
     }
@@ -317,7 +332,14 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         binding.lblDenah.visibility = View.GONE
         binding.scrollDenah.visibility = View.GONE
         main.binding.btnQR.setOnClickListener {
-            Toast.makeText(main, "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+            requireContext().showDialog(
+                title = "Akses Ditutup1",
+                message = "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta.",
+                positiveButtonText = "Ok",
+                onPositiveButtonClick = { dialog, _ ->
+                    dialog.dismiss()
+                }
+            )
         }
     }
 }
