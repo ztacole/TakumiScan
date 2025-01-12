@@ -38,7 +38,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Aplikasi ini menggunakan Scan QR kode dan Wajah Siswa maupun Siswi"
+        android:text="TakumiScan merupakan Aplikasi absensi berbasis QR Code Scanner"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
