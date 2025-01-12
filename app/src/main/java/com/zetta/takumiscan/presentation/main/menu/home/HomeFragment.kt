@@ -39,6 +39,7 @@ import com.zetta.takumiscan.util.core.Constants.GEOFENCE_ID
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LATITUDE
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_LONGITUDE
 import com.zetta.takumiscan.util.core.Constants.GEOFENCE_RADIUS
+import com.zetta.takumiscan.util.core.CoreFunction.isInternetAvailable
 import com.zetta.takumiscan.util.geofence.GeofenceHelper
 import com.zetta.takumiscan.util.geofence.OnGeofenceTriggeredListener
 import java.text.SimpleDateFormat
@@ -114,6 +115,11 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             }
             requestLocationPermission()
         }
+
+        binding.btnCheckConnection.setOnClickListener {
+            Toast.makeText(requireContext(), "Menghubungkan..", Toast.LENGTH_SHORT).show()
+            isInternetAvailable()
+        }
     }
 
     private fun setup(){
@@ -146,6 +152,8 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
 
         val dataUser = dbHelper.getDataUser()
         binding.lblHello.text = "Halo ${dataUser.nama}!"
+
+        isInternetAvailable()
     }
 
     override fun onStop() {
@@ -236,7 +244,6 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     private fun checkUserLocation() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            Toast.makeText(requireContext(), "Izin lokasi diperlukan", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -254,6 +261,8 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             onGeofenceExit()
             Log.d("User Location", "checkUserLocation: Outside Geofence")
         }
+
+        isInternetAvailable()
 
         if (isAlreadyPresence()) {
             main.binding.btnQR.setOnClickListener {
@@ -275,6 +284,19 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
             binding.lblEmpty.visibility = View.INVISIBLE
             binding.rvNotes.visibility = View.VISIBLE
             binding.rvNotes.adapter = NotesSmallAdapter(notes)
+        }
+    }
+
+    private fun isInternetAvailable(){
+        binding.lblKoneksi.text = "Menghubungkan.."
+        if (requireContext().isInternetAvailable()) {
+            binding.lblKoneksi.text = "Terhubung ke internet"
+        }
+        else {
+            binding.lblKoneksi.text = "Tidak ada koneksi internet"
+            main.binding.btnQR.setOnClickListener {
+                Toast.makeText(main, "Tidak ada koneksi internet, coba lagi nanti", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
