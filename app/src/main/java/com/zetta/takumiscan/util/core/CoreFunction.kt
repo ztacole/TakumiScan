@@ -6,6 +6,9 @@ import android.content.DialogInterface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.TypedValue
+import android.view.LayoutInflater
+import com.zetta.takumiscan.R
+import com.zetta.takumiscan.databinding.DialogTitleBinding
 
 object CoreFunction {
     fun Context.dpToPx(dp: Int): Int = TypedValue.applyDimension(
@@ -23,8 +26,11 @@ object CoreFunction {
         onNegativeButtonClick: DialogInterface.OnClickListener? = null,
         cancellable: Boolean = true
     ){
+        val titleView = DialogTitleBinding.inflate(LayoutInflater.from(this))
+        titleView.root.text = title
         val dialogBuilder = AlertDialog.Builder(this)
             .setCancelable(cancellable)
+            .setCustomTitle(titleView.root)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(positiveButtonText, onPositiveButtonClick)
