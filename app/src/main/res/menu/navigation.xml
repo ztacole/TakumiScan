@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title="Beranda"
         android:icon="@drawable/baseline_home_filled_24"
         />
     <item
@@ -13,7 +13,7 @@
         />
     <item
         android:id="@+id/history"
-        android:title="History"
+        android:title="Aktivitas"
         android:icon="@drawable/baseline_history_24"
         />
 </menu>
