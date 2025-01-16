@@ -18,6 +18,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -26,6 +28,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.zetta.takumiscan.R
 import com.zetta.takumiscan.data.local.DBHelper
 import com.zetta.takumiscan.databinding.FragmentHomeBinding
 import com.zetta.takumiscan.model.GeofenceData
@@ -147,6 +150,11 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
                     checkUserLocation()
                 }
             }
+        }
+
+        binding.imgDenah.setMinimumTileDpi(160)
+        binding.imgDenah.post {
+            binding.imgDenah.setImage(ImageSource.resource(R.drawable.denah_24))
         }
 
         if (isAlreadyPresence()) binding.lblKeterangan.text = "Yeayy, kamu sudah absen untuk hari ini\nTetap semangat dalam belajar yaa!"
@@ -318,7 +326,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     override fun onGeofenceEnter() {
         binding.lblLocation.text = "SMKN 24 Jakarta"
         binding.lblDenah.visibility = View.VISIBLE
-        binding.scrollDenah.visibility = View.VISIBLE
+        binding.imgDenah.visibility = View.VISIBLE
         main.binding.btnQR.setOnClickListener {
             Intent(main, ScanActivity::class.java).also {
                 it.putExtra("lokasi", "SMKN 24 Jakarta--")
@@ -330,7 +338,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
     override fun onGeofenceExit() {
         binding.lblLocation.text = "$distance m dari SMKN 24 Jakarta"
         binding.lblDenah.visibility = View.GONE
-        binding.scrollDenah.visibility = View.GONE
+        binding.imgDenah.visibility = View.GONE
         main.binding.btnQR.setOnClickListener {
             requireContext().showDialog(
                 title = "Akses Ditutup1",

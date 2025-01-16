@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation("com.davemorrissey.labs:subsampling-scale-image-view:3.10.0")
+
     implementation ("com.google.mlkit:barcode-scanning:17.3.0")
 
     implementation("androidx.camera:camera-core:1.3.4")
