@@ -57,6 +57,7 @@ class ScanActivity : AppCompatActivity() {
     private lateinit var cameraControl: CameraControl
     private lateinit var cameraProvider: ProcessCameraProvider
     private var isFlashOn = false
+    private lateinit var url: String
 
     private lateinit var dbHelper: DBHelper
     private lateinit var dataUser: DataUser
@@ -181,13 +182,28 @@ class ScanActivity : AppCompatActivity() {
         val url = barcode.url?.url?:barcode.displayValue
         if (url != null){
             Log.d("QR URL", "handleBarcode: $url")
-
+            this.url = url
             stopCamera()
+            if (url != "https://backend24.site/Rian/XI/takumi/absensi-takumi.php") {
+                showDialog(
+                    title = "Absen Gagal!",
+                    message = "Hayoooo kamu pake QR siapa hayooo??",
+                    cancellable = false,
+                    positiveButtonText = "Coba Lagi",
+                    onPositiveButtonClick = { dialogWarning, _ ->
+                        dialogWarning.dismiss()
+                        startCamera()
+                    }
+                )
+                return
+            }
+
 
             showDialog(
                 title = "Scan Berhasil",
                 message = "Silahkan absen wajah kamu!",
                 positiveButtonText = "Ok",
+                cancellable = false,
                 onPositiveButtonClick = DialogInterface.OnClickListener { dialog, _ ->
                     dialog.dismiss()
                     imagePickerHelper.openCamera(isCameraGranted)
@@ -239,7 +255,7 @@ class ScanActivity : AppCompatActivity() {
         }
 
         APIController(
-            url = "absensi-takumi.php",
+            url = url,
             method = "POST"
         ).execute(postData = postData) { message, code ->
             Log.d("Absensi", "showDialogStory: $message, $code")
