@@ -11,11 +11,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class APIController(url: String, method: String) {
-    companion object{
-        const val BASE_URL = "https://backend24.site/Rian/XI/takumi/"
-    }
-
-    private var conn: HttpURLConnection = URL(BASE_URL+url).openConnection() as HttpURLConnection
+    private var conn: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
 
     init {
         conn.requestMethod = method
