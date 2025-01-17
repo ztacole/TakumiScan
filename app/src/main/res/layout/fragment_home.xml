@@ -241,29 +241,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblKeterangan" />
 
-        <ScrollView
-            android:id="@+id/scrollDenah"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+            android:id="@+id/imgDenah"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblDenah">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imageView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/denah_24_x4" />
-            </LinearLayout>
-        </ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/lblDenah" />
 
         <TextView
             android:id="@+id/textView12"
@@ -274,7 +260,7 @@
             android:text="Catatan Kamu"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollDenah" />
+            app:layout_constraintTop_toBottomOf="@+id/imgDenah" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

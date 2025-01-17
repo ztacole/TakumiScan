@@ -1,6 +1,7 @@
 package com.zetta.takumiscan.presentation.main.menu.history
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +62,8 @@ class HistoryAdapter(private val histories: List<History>): RecyclerView.Adapter
                 Locale.ENGLISH
             ).parse(history.dateTime)
             val dateTime = convertDateTime?.let { format.format(it) }
+            if (history.status == "Terlambat") view.binding.lblStatus.setTextColor(Color.RED)
+            else view.binding.lblStatus.setTextColor(view.itemView.resources.getColor(R.color.navy, view.itemView.context.theme))
 
             view.binding.imgHistory.setImageBitmap(photo)
             view.binding.lblDate.text = dateTime
