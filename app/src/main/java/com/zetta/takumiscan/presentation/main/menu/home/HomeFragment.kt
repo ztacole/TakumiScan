@@ -341,7 +341,7 @@ class HomeFragment : Fragment(), OnGeofenceTriggeredListener {
         binding.imgDenah.visibility = View.GONE
         main.binding.btnQR.setOnClickListener {
             requireContext().showDialog(
-                title = "Akses Ditutup1",
+                title = "Akses Ditutup!",
                 message = "Fitur ini hanya aktif jika kamu berada di kawasan SMKN 24 Jakarta.",
                 positiveButtonText = "Ok",
                 onPositiveButtonClick = { dialog, _ ->
